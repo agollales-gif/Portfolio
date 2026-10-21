@@ -8,12 +8,15 @@ interface RevealProps {
   threshold?: number;
 }
 
+/**
+ * UnyoCorp --ease-out-expo (cubic-bezier(0.16, 1, 0.3, 1)) Scroll Reveal
+ */
 export const Reveal: React.FC<RevealProps> = ({
   children,
   className = '',
   delayMs = 0,
   direction = 'up',
-  threshold = 0.12,
+  threshold = 0.14,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -30,7 +33,7 @@ export const Reveal: React.FC<RevealProps> = ({
           }
         });
       },
-      { threshold, rootMargin: '0px 0px -40px 0px' }
+      { threshold, rootMargin: '0px 0px -36px 0px' }
     );
 
     observer.observe(node);
@@ -39,19 +42,22 @@ export const Reveal: React.FC<RevealProps> = ({
 
   const hiddenTransform =
     direction === 'up'
-      ? 'translate-y-8 opacity-0 blur-[2px]'
+      ? 'translate-y-7 opacity-0'
       : direction === 'left'
-      ? '-translate-x-8 opacity-0 blur-[2px]'
+      ? '-translate-x-6 opacity-0'
       : direction === 'right'
-      ? 'translate-x-8 opacity-0 blur-[2px]'
-      : 'scale-[0.95] opacity-0 blur-[2px]';
+      ? 'translate-x-6 opacity-0'
+      : 'scale-[0.97] opacity-0';
 
   return (
     <div
       ref={ref}
-      style={{ transitionDelay: `${delayMs}ms` }}
-      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
-        visible ? 'translate-y-0 translate-x-0 scale-100 opacity-100 blur-0' : hiddenTransform
+      style={{
+        transitionDelay: `${delayMs}ms`,
+        transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      }}
+      className={`transition-all duration-[820ms] will-change-transform ${
+        visible ? 'translate-y-0 translate-x-0 scale-100 opacity-100' : hiddenTransform
       } ${className}`}
     >
       {children}
@@ -59,60 +65,199 @@ export const Reveal: React.FC<RevealProps> = ({
   );
 };
 
-interface SpotlightCardProps {
-  children: React.ReactNode;
+/**
+ * UnyoCorp .claim-line-mask Line-by-Line Editorial Text Reveal
+ */
+interface MaskedLinesProps {
+  lines: {
+    text: React.ReactNode;
+    accent?: boolean;
+  }[];
+  className?: string;
+  baseDelayMs?: number;
+  staggerMs?: number;
+}
+
+export const MaskedLines: React.FC<MaskedLinesProps> = ({
+  lines,
+  className = '',
+  baseDelayMs = 60,
+  staggerMs = 110,
+}) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={className}>
+      {lines.map((line, i) => (
+        <span key={i} className="claim-line-mask">
+          <span
+            style={{
+              transitionDelay: `${baseDelayMs + i * staggerMs}ms`,
+            }}
+            className={`claim-line-inner ${
+              visible ? 'translate-y-0 opacity-100' : 'translate-y-[108%] opacity-0'
+            } ${line.accent ? 'text-[#00F0FF]' : ''}`}
+          >
+            {line.text}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+};
+
+/**
+ * UnyoCorp [data-stat-value] Tabular Numeral Counter
+ */
+interface AnimatedNumeralProps {
+  value: string;
   className?: string;
 }
 
-export const SpotlightCard: React.FC<SpotlightCardProps> = ({ children, className = '' }) => {
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState(false);
+export const AnimatedNumeral: React.FC<AnimatedNumeralProps> = ({ value, className = '' }) => {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const [displayVal, setDisplayVal] = useState<string>(value);
+  const [started, setStarted] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setPos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
+  const numericMatch = value.match(/^(\d+)(.*)$/);
+  const targetNum = numericMatch ? parseInt(numericMatch[1], 10) : 0;
+  const suffix = numericMatch ? numericMatch[2] : '';
+  const padLen = numericMatch && numericMatch[1].startsWith('0') ? numericMatch[1].length : 0;
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started) {
+            setStarted(true);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started || !numericMatch) return;
+
+    const duration = 1100;
+    const startTime = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      // easeOutExpo
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = Math.round(eased * targetNum);
+      const formatted =
+        padLen > 0 ? String(current).padStart(padLen, '0') + suffix : String(current) + suffix;
+      setDisplayVal(formatted);
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    };
+
+    requestAnimationFrame(tick);
+  }, [started, targetNum, padLen, suffix]);
+
+  return (
+    <span ref={ref} className={`numeral ${className}`}>
+      {displayVal}
+    </span>
+  );
+};
+
+/**
+ * UnyoCorp [data-loader] Initial Architectural Curtain
+ */
+export const PageLoader: React.FC = () => {
+  const [progress, setProgress] = useState(0);
+  const [lifted, setLifted] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const start = performance.now();
+    const duration = 560;
+
+    const step = (now: number) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setProgress(Math.round(eased * 100));
+      if (p < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setTimeout(() => setLifted(true), 80);
+        setTimeout(() => setHidden(true), 820);
+      }
+    };
+
+    requestAnimationFrame(step);
+  }, []);
+
+  if (hidden) return null;
 
   return (
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`relative overflow-hidden group ${className}`}
+      aria-hidden="true"
+      style={{
+        transitionTimingFunction: 'cubic-bezier(0.76, 0, 0.24, 1)',
+      }}
+      className={`fixed inset-0 z-50 flex flex-col justify-between bg-[#060708] p-6 md:p-10 text-[#F2F6F8] transition-transform duration-[700ms] pointer-events-none ${
+        lifted ? '-translate-y-full' : 'translate-y-0'
+      }`}
     >
-      {/* Dynamic Electric Cyan Mouse-Tracking Spotlight */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-0"
-        style={{
-          opacity: hovered ? 1 : 0,
-          background: `radial-gradient(420px circle at ${pos.x}px ${pos.y}px, rgba(0, 240, 255, 0.13), transparent 65%)`,
-        }}
-      />
+      <div className="flex items-center justify-between text-xs font-mono tracking-widest uppercase text-[#8E9BAE]">
+        <span>Alesjo Agolli</span>
+        <span className="text-[#00F0FF]">Tirana, AL</span>
+      </div>
 
-      {/* Animated Top Laser Border Sweep on Hover */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 h-[2px] w-0 bg-gradient-to-r from-transparent via-[#00F0FF] to-transparent group-hover:w-full transition-all duration-700 ease-out z-20"
-      />
+      <div className="my-auto">
+        <p className="font-display text-display-lg font-semibold tracking-tight">
+          Alesjo Agolli<span className="text-[#00F0FF]">.</span>
+        </p>
+      </div>
 
-      {/* Animated Corner Brackets */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute top-0 left-0 w-2.5 h-2.5 border-t-2 border-l-2 border-[#00F0FF] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-0 w-2.5 h-2.5 border-b-2 border-r-2 border-[#00F0FF] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
-      />
-
-      <div className="relative z-10 h-full flex flex-col justify-between">{children}</div>
+      <div>
+        <div className="flex items-baseline justify-between font-mono text-xs text-[#8E9BAE] mb-2">
+          <span>LOADING PORTFOLIO</span>
+          <span className="text-[#00F0FF] tabular-nums">
+            {String(progress).padStart(3, '0')}%
+          </span>
+        </div>
+        <div className="h-[2px] w-full bg-[#1A212B] overflow-hidden">
+          <div
+            className="h-full bg-[#00F0FF] origin-left transition-transform duration-75"
+            style={{ transform: `scaleX(${progress / 100})` }}
+          />
+        </div>
+      </div>
     </div>
   );
 };

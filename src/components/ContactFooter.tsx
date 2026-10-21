@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Copy, Check, FileText } from 'lucide-react';
 import { DEFAULT_BRAND_TOKENS, PROFILE_DATA } from '../data/portfolioData';
-import { Reveal, SpotlightCard } from './Reveal';
+import { Reveal, MaskedLines } from './Reveal';
 
 interface ContactFooterProps {
   onOpenCvModal: () => void;
@@ -51,116 +51,126 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
 
   return (
     <>
-      {/* Compact Responsive Contact Section */}
+      {/* UnyoCorp #start Contact Section */}
       <section
         id="contact"
-        className="py-12 sm:py-16 md:py-20 border-b border-[#1A222C] bg-[#060708]"
+        className="py-14 sm:py-18 md:py-24 border-b border-[#1A212B] bg-[#060708]"
       >
         <div className="max-w-[100rem] mx-auto px-4 sm:px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left 5 Columns */}
-            <Reveal direction="left" className="lg:col-span-5">
-              <div className="eyebrow mb-2 flex items-center gap-2.5">
-                <span className="h-1.5 w-1.5 bg-[#00F0FF] shadow-[0_0_8px_#00F0FF]" />
-                <span>06 / Contact</span>
-              </div>
+            <div className="lg:col-span-5">
+              <Reveal>
+                <div className="eyebrow mb-2 flex items-center gap-2.5">
+                  <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
+                  <span>06 / Contact</span>
+                </div>
+              </Reveal>
               <h2 className="font-display text-display-md text-[#F2F6F8]">
-                Let&apos;s build <span className="text-[#00F0FF]">together.</span>
+                <MaskedLines
+                  lines={[{ text: "Let's build" }, { text: 'together.', accent: true }]}
+                />
               </h2>
-              <p className="mt-3 text-sm text-[#94A3B4] max-w-md leading-relaxed">
-                Available for full-stack web development, UI/UX engineering, and local AI
-                integrations.
-              </p>
+              <Reveal delayMs={140}>
+                <p className="mt-3 text-sm text-[#8E9BAE] max-w-md leading-relaxed">
+                  Available for full-stack web development, UI/UX engineering, and local AI
+                  integrations.
+                </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
-                >
-                  {copiedEmail ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-[#00F0FF]" />
-                      <span>Copied Email</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-[#00F0FF]" />
-                      <span>{DEFAULT_BRAND_TOKENS.email}</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={onOpenCvModal}
-                  className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
-                >
-                  <FileText className="w-3.5 h-3.5 text-[#00F0FF]" />
-                  <span>Executive CV</span>
-                </button>
-              </div>
-            </Reveal>
+                <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
+                  >
+                    {copiedEmail ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-[#00F0FF]" />
+                        <span>Copied Email</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5 text-[#00F0FF]" />
+                        <span>{DEFAULT_BRAND_TOKENS.email}</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onOpenCvModal}
+                    className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-[#00F0FF]" />
+                    <span>Executive CV</span>
+                  </button>
+                </div>
+              </Reveal>
+            </div>
 
-            {/* Right 7 Columns: Interactive Spotlight Contact Form */}
-            <Reveal direction="right" delayMs={120} className="lg:col-span-7">
-              <SpotlightCard className="bg-[#0A0C0F] border border-[#1A222C] p-5 sm:p-6 md:p-7">
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="flex flex-wrap gap-1.5">
-                    {FOCUS_OPTIONS.map((opt) => (
+            {/* Right 7 Columns: UnyoCorp Tag-Qualifier Form */}
+            <Reveal delayMs={160} className="lg:col-span-7">
+              <form
+                onSubmit={handleSubmit}
+                className="bg-[#0C0F14] border border-[#1A212B] p-6 sm:p-8 space-y-5"
+              >
+                <div className="flex flex-wrap gap-1.5">
+                  {FOCUS_OPTIONS.map((opt) => {
+                    const active = selectedFocus === opt;
+                    return (
                       <button
                         key={opt}
                         type="button"
                         onClick={() => setSelectedFocus(opt)}
-                        className={`px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider border transition-all ${
-                          selectedFocus === opt
-                            ? 'bg-[#00F0FF] text-[#060708] border-[#00F0FF] font-semibold shadow-[0_0_16px_rgba(0,240,255,0.28)]'
-                            : 'bg-[#060708] text-[#94A3B4] border-[#1A222C] hover:border-[#00F0FF]/50 hover:text-[#F2F6F8]'
+                        className={`tag ${
+                          active
+                            ? '!bg-[#00F0FF] !text-[#060708] !border-[#00F0FF]'
+                            : ''
                         }`}
                       >
                         {opt}
                       </button>
-                    ))}
-                  </div>
+                    );
+                  })}
+                </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Name"
-                      className="w-full bg-transparent border-b border-[#1A222C] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#596777] transition-colors"
-                    />
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Email"
-                      className="w-full bg-transparent border-b border-[#1A222C] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#596777] transition-colors"
-                    />
-                  </div>
-
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
                     type="text"
                     required
-                    value={brief}
-                    onChange={(e) => setBrief(e.target.value)}
-                    placeholder="Short project or role summary..."
-                    className="w-full bg-transparent border-b border-[#1A222C] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#596777] transition-colors"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Name"
+                    className="w-full bg-transparent border-b border-[#1A212B] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#525E6F] transition-colors"
                   />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    className="w-full bg-transparent border-b border-[#1A212B] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#525E6F] transition-colors"
+                  />
+                </div>
 
-                  <div className="flex items-center justify-end pt-1">
-                    <button
-                      type="submit"
-                      className="btn btn-primary w-full sm:w-auto !py-2.5 !px-6"
-                    >
-                      <span>Send</span>
-                      <ArrowRight className="w-4 h-4 btn-icon" />
-                    </button>
-                  </div>
-                </form>
-              </SpotlightCard>
+                <input
+                  type="text"
+                  required
+                  value={brief}
+                  onChange={(e) => setBrief(e.target.value)}
+                  placeholder="Short project or role summary..."
+                  className="w-full bg-transparent border-b border-[#1A212B] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#525E6F] transition-colors"
+                />
+
+                <div className="flex items-center justify-end pt-1">
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full sm:w-auto"
+                  >
+                    <span>Send Brief</span>
+                    <ArrowRight className="w-4 h-4 btn-icon" />
+                  </button>
+                </div>
+              </form>
             </Reveal>
           </div>
         </div>
@@ -168,9 +178,9 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
 
       {/* Ultra-Minimal Responsive Single-Bar Footer */}
       <footer className="bg-[#060708] py-4 sm:py-5">
-        <div className="max-w-[100rem] mx-auto px-4 sm:px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs text-[#94A3B4]">
+        <div className="max-w-[100rem] mx-auto px-4 sm:px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs text-[#8E9BAE]">
           <div className="flex items-center gap-2.5">
-            <span className="h-2 w-2 bg-[#00F0FF] animate-pulse" />
+            <span className="h-2 w-2 bg-[#00F0FF]" />
             <span className="text-[#F2F6F8] font-display font-semibold">Alesjo Agolli</span>
             <span>· {PROFILE_DATA.location}</span>
           </div>
@@ -199,7 +209,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
             >
               CV
             </button>
-            <span className="text-[#596777]">TIA {tiranaTime}</span>
+            <span className="text-[#525E6F]">TIA {tiranaTime}</span>
           </div>
         </div>
       </footer>
