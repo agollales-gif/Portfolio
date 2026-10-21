@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alesjo Agolli — Curriculum Vitae</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: A4;
+        margin: 12mm 14mm;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #0b0f17;
+        background: #f4f6f8;
+        line-height: 1.48;
+        font-size: 9.8pt;
+      }
+      .toolbar {
+        max-width: 210mm;
+        margin: 16px auto 0;
+        padding: 12px 18px;
+        background: #060708;
+        color: #f2f6f8;
+        border: 1px solid #00f0ff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+      }
+      .toolbar button {
+        background: #00f0ff;
+        color: #060708;
+        border: none;
+        padding: 8px 16px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+      }
+      .sheet {
+        max-width: 210mm;
+        margin: 12px auto 32px;
+        background: #ffffff;
+        padding: 14mm 16mm;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 2px solid #060708;
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+      }
+      .header-left h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 22pt;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: #060708;
+      }
+      .header-left .roles {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 8.5pt;
+        font-weight: 600;
+        color: #008496;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-top: 3px;
+      }
+      .contact-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        margin-top: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 8pt;
+        color: #334155;
+      }
+      .contact-bar a {
+        color: #0b0f17;
+        text-decoration: none;
+        border-bottom: 1px solid #94a3b8;
+      }
+      .avatar {
+        width: 68px;
+        height: 82px;
+        object-fit: cover;
+        object-position: center 20%;
+        border: 1.5px solid #060708;
+        flex-shrink: 0;
+      }
+      .section {
+        margin-bottom: 14px;
+      }
+      .section-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 8.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: #060708;
+        border-bottom: 1px solid #cbd5e1;
+        padding-bottom: 3px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .section-title span.tag {
+        color: #008496;
+        font-size: 7.5pt;
+      }
+      .summary {
+        color: #1e293b;
+        font-size: 9.3pt;
+        text-align: justify;
+      }
+      .project {
+        margin-bottom: 10px;
+      }
+      .project-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .project-title {
+        font-weight: 700;
+        font-size: 9.8pt;
+        color: #060708;
+      }
+      .project-title a {
+        color: #008496;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 8pt;
+        font-weight: 500;
+        margin-left: 6px;
+        text-decoration: none;
+      }
+      .project-role {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 7.8pt;
+        color: #475569;
+      }
+      .project-stack {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 7.6pt;
+        color: #008496;
+        margin: 1.5px 0 3px;
+      }
+      ul.bullets {
+        padding-left: 15px;
+        color: #1e293b;
+        font-size: 9pt;
+      }
+      ul.bullets li {
+        margin-bottom: 2.5px;
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4.5px;
+        font-size: 9pt;
+      }
+      .skill-row strong {
+        color: #060708;
+        display: inline-block;
+        min-width: 185px;
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      @media print {
+        body {
+          background: #ffffff;
+        }
+        .toolbar {
+          display: none !important;
+        }
+        .sheet {
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <span>ALESJO AGOLLI — EXECUTIVE CV (A4 PRINT / PDF READY)</span>
+      <button onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <main class="sheet">
+      <header class="header">
+        <div class="header-left">
+          <h1>ALESJO AGOLLI</h1>
+          <div class="roles">
+            Full-Stack Web Developer · AI Integration Specialist · UI/UX Engineer
+          </div>
+          <div class="contact-bar">
+            <span>📍 Tirana, Albania</span>
+            <span>✉️ <a href="mailto:agollales@gmail.com">agollales@gmail.com</a></span>
+            <span>💻 <a href="https://github.com/agollales-gif">github.com/agollales-gif</a></span>
+            <span>
+              🔗
+              <a href="https://www.linkedin.com/in/alesjo-agolli-a82223361/">
+                linkedin.com/in/alesjo-agolli-a82223361
+              </a>
+            </span>
+          </div>
+        </div>
+        <img src="/alesjo-portrait.jpg" alt="Alesjo Agolli" class="avatar" />
+      </header>
+
+      <section class="section">
+        <div class="section-title">
+          <span>01 / Executive Profile</span>
+          <span class="tag">FULL-STACK · UI/UX · LOCAL AI</span>
+        </div>
+        <p class="summary">
+          Tirana-based Full-Stack Web Developer and AI Integration Specialist passionate about
+          building modern, high-performance web platforms and intelligent digital products. Trained
+          in Information &amp; Communication Technology (ICT) at Don Bosko Technical High School in
+          Tirana, specializing in production-ready applications using React, Next.js, TypeScript,
+          Tailwind CSS, Node.js, Python, and Supabase, alongside custom conversational AI
+          assistants powered by local Large Language Models (Ollama). Alumnus of HackJunction
+          (Tirana &amp; Finland) and CultiVETing (Liguria, Italy).
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <span>02 / Featured Projects &amp; Engineering Experience</span>
+          <span class="tag">PRODUCTION DEPLOYMENTS</span>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <div class="project-title">
+              "Don Bosko Tirana" Digital Ecosystem
+              <a href="https://www.qendradonbosko.com/" target="_blank">qendradonbosko.com ↗</a>
+            </div>
+            <div class="project-role">Lead Full-Stack Developer &amp; AI Engineer</div>
+          </div>
+          <div class="project-stack">
+            Stack: React · TypeScript · Node.js · Supabase · Ollama AI · Tailwind CSS
+          </div>
+          <ul class="bullets">
+            <li>
+              <strong>Official Web Portal:</strong> Designed and launched a modern, accessible
+              public web portal (<a href="https://www.qendradonbosko.com/">qendradonbosko.com</a>)
+              for Qendra Sociale "Don Bosko" Tirana.
+            </li>
+            <li>
+              <strong>"Sekretaria" Management System:</strong> Engineered an internal administrative
+              platform streamlining student records, institutional data, and staff workflows.
+            </li>
+            <li>
+              <strong>"Bosko AI" Virtual Assistant:</strong> Integrated a custom conversational AI
+              assistant running on local LLM infrastructure via Ollama to assist students and staff
+              in real time.
+            </li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <div class="project-title">
+              Luka Rent a Car — Commercial Booking Platform
+              <a href="https://lukarentacar.com" target="_blank">lukarentacar.com ↗</a>
+            </div>
+            <div class="project-role">Full-Stack Web Developer</div>
+          </div>
+          <div class="project-stack">Stack: React · Vite · Tailwind CSS · Node.js</div>
+          <ul class="bullets">
+            <li>
+              Built a commercial, mobile-first vehicle rental and booking platform tailored for
+              high speed, technical SEO performance, and seamless customer reservation flows.
+            </li>
+            <li>
+              Developed an intuitive vehicle catalog with dynamic filtering and optimized Core Web
+              Vitals across all device types.
+            </li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project-head">
+            <div class="project-title">
+              HaNeul — Asian Food Distributor Platform
+              <a href="https://haneul.blackbear-solutions.com/" target="_blank">
+                haneul.blackbear-solutions.com ↗
+              </a>
+            </div>
+            <div class="project-role">Front-End Developer &amp; UI/UX Designer</div>
+          </div>
+          <div class="project-stack">Stack: Figma · React · Tailwind CSS</div>
+          <ul class="bullets">
+            <li>
+              Created high-fidelity UI/UX prototypes in Figma and delivered a clean, scalable
+              multi-page React &amp; Tailwind CSS front-end architecture focused on product
+              discovery and brand identity.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <span>03 / Technical Skills Matrix</span>
+          <span class="tag">END-TO-END STACK</span>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-row">
+            <strong>Front-End Development:</strong> React, Next.js, TypeScript, JavaScript (ES6+),
+            Vite, Tailwind CSS, HTML5, CSS3
+          </div>
+          <div class="skill-row">
+            <strong>Back-End &amp; Databases:</strong> Node.js, Express.js, Hono, Python, C++,
+            Supabase, PostgreSQL, RESTful APIs, Git &amp; GitHub
+          </div>
+          <div class="skill-row">
+            <strong>AI &amp; Emerging Tech:</strong> Ollama, Local LLM Deployment &amp;
+            Integration, Prompt Engineering, AI Workflow Automation
+          </div>
+          <div class="skill-row">
+            <strong>UI/UX &amp; Design:</strong> Figma, Responsive Web Design, Wireframing &amp;
+            Prototyping
+          </div>
+        </div>
+      </section>
+
+      <div class="two-col">
+        <section class="section">
+          <div class="section-title">
+            <span>04 / International Experience &amp; Leadership</span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <strong>CultiVETing Mobility Program (2026) — Liguria, Italy:</strong> Selected
+              participant for an international technical study visit on European vocational
+              education and technological innovation.
+            </li>
+            <li>
+              <strong>HackJunction Alumnus (2025) — Tirana &amp; Finland:</strong> Competed in
+              Europe's leading hackathon ecosystem building rapid software prototypes.
+            </li>
+            <li>
+              <strong>Tech Community Organizer (2026) — Tirana:</strong> Organized the "Bosko
+              Counter-Labs" tournament and architected the "T.I.K. Pro League" ICT competition.
+            </li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <span>05 / Education &amp; Languages</span>
+          </div>
+          <ul class="bullets">
+            <li>
+              <strong>Don Bosko Technical High School — Tirana, Albania</strong><br />
+              Information &amp; Communication Technology (ICT) — Full-Stack Web Development &amp;
+              Software Engineering.
+            </li>
+            <li>
+              <strong>Languages:</strong> Albanian (Native), English (Professional Working
+              Proficiency), Italian (Conversational / Technical Mobility).
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
