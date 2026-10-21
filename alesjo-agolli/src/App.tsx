@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { CvPreviewModal } from './components/CvPreviewModal';
@@ -24,22 +23,14 @@ export function App() {
       {/* Top Scroll Progress Line */}
       <ScrollProgressBar />
 
-      {/* UnyoCorp [data-loader] Architectural Intro Curtain */}
+      {/* Architectural Intro Curtain */}
       <PageLoader />
 
-      {/* Fixed Navigation (01 HOME · 02 MAIN · 03 CLOSED) */}
-      <Navbar onOpenCV={() => setCvModalOpen(true)} />
-
-      {/* UnyoCorp Master Lenis + GSAP ScrollTrigger 3-Page Journey Engine */}
+      {/* Master Lenis + GSAP ScrollTrigger Journey Engine */}
       <UnyoJourneyProvider>
         <main>
-          {/* Page 01: HOME */}
           <HeroSection onOpenCV={() => setCvModalOpen(true)} />
-
-          {/* Page 02: MAIN (Selected Works Scene Wipes + Stack Ticker) */}
           <ProjectsSection />
-
-          {/* Page 03: CLOSED (Footer & Direct Contact) */}
           <ContactFooter onOpenCV={() => setCvModalOpen(true)} />
         </main>
       </UnyoJourneyProvider>

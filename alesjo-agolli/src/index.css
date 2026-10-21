@@ -8,7 +8,6 @@
   --font-display: 'Syne', sans-serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --nav-h: 4.5rem;
   --canvas: #060708;
   --canvas-sunk: #0D0F12;
   --canvas-raised: #13161B;
@@ -63,87 +62,14 @@
   background: #00F0FF;
 }
 
-/* ==========================================================================
-   UNYOCORP STICKY SHEET & SCROLL-SCRUBBED SCENE ARCHITECTURE
-   ========================================================================== */
-[data-journey],
-[data-chapter] {
-  position: relative;
-}
-
-[data-chapter] {
-  isolation: isolate;
-}
-
-[data-chapter][id] {
-  scroll-margin-top: 0;
-}
-
-[data-sheet]:not(:last-child) {
-  margin-bottom: -100svh;
-}
-
-[data-track] {
-  position: relative;
-  height: calc(var(--scene, 0svh) + 200svh);
-}
-
-[data-sticky] {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  overflow: clip;
-  isolation: isolate;
-  transform-origin: 50% 0;
-  background-color: #060708;
-  color: #F4F5F7;
-  will-change: transform;
-}
-
-[data-sticky-scrim] {
-  display: block;
-  position: absolute;
-  inset: 0;
-  z-index: 40;
-  background-color: #020304;
-  opacity: 0;
-  pointer-events: none;
-  will-change: opacity;
-}
-
-/* Selected Work stacked scenes */
-[data-scenes] {
-  display: block;
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
-
-[data-scene] {
-  position: absolute;
-  inset: 0;
-  min-height: 0;
-  height: 100%;
-  will-change: transform;
-}
-
-[data-split-media-inner] {
-  position: absolute;
-  inset: -12% 0;
-  will-change: transform;
-}
-
-.claim-line-mask {
-  overflow: hidden;
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
-}
-
 html[data-loaded='true'] [data-loader] {
   display: none;
+}
+
+/* 3D Perspective Stage for Galaxy Project Slideshow */
+.galaxy-perspective {
+  perspective: 1600px;
+  transform-style: preserve-3d;
 }
 
 /* Subtle Architectural Grid Overlay */

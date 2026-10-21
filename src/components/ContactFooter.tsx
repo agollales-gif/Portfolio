@@ -25,17 +25,16 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCV }) => {
 
   return (
     <footer
-      id="closed"
+      id="contact"
       data-chapter="close"
-      data-sheet=""
-      className="relative z-20 min-h-screen flex flex-col justify-between pt-[72px] bg-[#060708] border-t border-white/[0.14] overflow-hidden shadow-[0_-32px_80px_rgba(0,0,0,0.9)]"
+      className="relative z-20 min-h-screen flex flex-col justify-between bg-[#060708] border-t border-white/[0.14] overflow-hidden"
     >
-      {/* Top Status Bar */}
+      {/* Top Status Bar (No Closed/Home/Main labels) */}
       <div className="w-full border-b border-white/[0.08]">
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-3.5 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.2em] uppercase text-[#8E95A2]">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-4 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.2em] uppercase text-[#8E95A2]">
           <div className="flex items-center gap-2.5">
             <span className="w-2 h-2 bg-[#00F0FF]" />
-            <span className="text-[#F4F5F7] font-semibold">03 / CLOSED</span>
+            <span className="text-[#F4F5F7] font-semibold">CONTACT</span>
           </div>
           <div className="hidden sm:block">TIRANA, ALBANIA · UTC+1</div>
           <div className="flex items-center gap-2 text-[#00F0FF]">
@@ -187,7 +186,6 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCV }) => {
       <div className="w-full border-t border-white/[0.08] bg-[#040506]">
         <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-4 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.18em] uppercase text-[#8E95A2]">
           <span>© {new Date().getFullYear()} ALESJO AGOLLI</span>
-          <span className="hidden sm:inline">01 HOME · 02 MAIN · 03 CLOSED</span>
           <button
             onClick={scrollToTop}
             className="inline-flex items-center gap-2 text-[#00F0FF] hover:text-[#F4F5F7] transition-colors cursor-pointer"
