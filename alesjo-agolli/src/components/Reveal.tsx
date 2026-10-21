@@ -1,630 +1,486 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
 
-const EASE = {
-  reveal: 'expo.out',
-  soft: 'power2.out',
-  inOut: 'power2.inOut',
-};
-
-function animateCount(el: HTMLElement, duration = 1.1) {
-  const raw = (el.dataset.targetValue || el.textContent || '').trim();
-  const match = raw.match(/^([+\-]?)(\d+)(.*)$/);
-  if (!match) return;
-  const [, prefix, digits, suffix] = match;
-  const target = Number(digits);
-  const padLen = digits.startsWith('0') ? digits.length : 0;
-  const state = { n: 0 };
-
-  gsap.to(state, {
-    n: target,
-    duration,
-    ease: 'power2.out',
-    onUpdate: () => {
-      const numStr =
-        padLen > 0
-          ? String(Math.round(state.n)).padStart(padLen, '0')
-          : String(Math.round(state.n));
-      el.textContent = `${prefix}${numStr}${suffix}`;
-    },
-  });
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
 }
 
-function batchReveal(elements: HTMLElement[]) {
-  if (!elements.length) return () => {};
-  gsap.set(elements, { opacity: 0, y: 28 });
-  const triggers = ScrollTrigger.batch(elements, {
-    start: 'top 88%',
-    once: true,
-    onEnter: (batch) =>
-      gsap.to(batch, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: EASE.reveal,
-        stagger: 0.07,
-        overwrite: true,
-      }),
-  });
-  return () => {
-    triggers.forEach((t) => t.kill());
-    gsap.set(elements, { clearProps: 'opacity,transform' });
-  };
-}
-
-/**
- * UnyoCorp [data-loader] Architectural SVG + Progress Curtain
- */
+/* ============================================================================
+   1. UNYOCORP PRELOADER CURTAIN ([data-loader])
+   ============================================================================ */
 export const PageLoader: React.FC = () => {
-  const loaderRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const loader = loaderRef.current;
-    if (!loader) return;
-
-    const fill = loader.querySelector<HTMLElement>('[data-loader-fill]');
-    const count = loader.querySelector<HTMLElement>('[data-loader-count]');
-    const stroke = loader.querySelector<SVGPathElement>('[data-loader-stroke]');
-    const fillPath = loader.querySelector<SVGPathElement>('[data-loader-fill-path]');
-    const inner = loader.querySelector<HTMLElement>('[data-loader-inner]');
-
-    const counterState = { n: 0 };
-    const tl = gsap.timeline({
-      defaults: { ease: EASE.reveal },
-      onComplete: () => {
-        document.documentElement.dataset.loaded = 'true';
-        window.dispatchEvent(new Event('journey:ready'));
-      },
-    });
-
-    if (stroke) {
-      const length = 320;
-      gsap.set(stroke, { strokeDasharray: length, strokeDashoffset: length });
-      tl.to(stroke, { strokeDashoffset: 0, duration: 0.85, ease: EASE.inOut }, 0);
-    }
-
-    if (fillPath) {
-      tl.fromTo(fillPath, { opacity: 0 }, { opacity: 1, duration: 0.55, ease: EASE.soft }, 0.45);
-    }
-
-    if (fill) {
-      tl.fromTo(
-        fill,
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.85, ease: 'power2.out' },
-        0.05
-      );
-    }
-
-    tl.to(
-      counterState,
-      {
-        n: 100,
-        duration: 0.85,
-        ease: 'power2.out',
-        onUpdate: () => {
-          if (count) {
-            count.textContent = String(Math.round(counterState.n)).padStart(3, '0');
-          }
-        },
-      },
-      0.05
-    );
-
-    if (inner) {
-      tl.to(inner, { yPercent: -24, autoAlpha: 0, duration: 0.48, ease: EASE.inOut }, 0.92);
-    }
-
-    tl.to(
-      loader,
-      {
-        yPercent: -100,
-        duration: 0.78,
-        ease: EASE.inOut,
-        onComplete: () => {
-          loader.style.display = 'none';
-        },
-      },
-      1.02
-    );
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
   return (
     <div
-      ref={loaderRef}
-      data-loader="true"
-      role="status"
-      aria-live="polite"
-      aria-label="Loading portfolio"
-      className="fixed inset-0 z-[70] flex flex-col bg-[#060708] text-[#F2F6F8]"
+      data-loader=""
+      className="fixed inset-0 z-[100] flex flex-col justify-between bg-[#060708] px-6 py-8 sm:px-10 lg:px-16 text-[#F4F5F7] select-none pointer-events-none"
     >
-      <div
-        data-loader-inner="true"
-        className="flex flex-1 flex-col items-center justify-center gap-8"
-      >
-        <svg viewBox="0 0 64 64" className="h-20 w-20" aria-hidden="true">
-          <rect
-            x="2"
-            y="2"
-            width="60"
-            height="60"
-            fill="none"
-            stroke="#1A212B"
-            strokeWidth="1.5"
-          />
-          <path
-            data-loader-stroke="true"
-            d="M2 2 H62 V62 H2 Z"
-            fill="none"
-            stroke="#00F0FF"
-            strokeWidth="2"
-          />
-          <g data-loader-fill-path="true" opacity="0">
-            <path
-              d="M11 47L22 17H28.5L39.5 47H33.5L31.2 40H19.8L17.5 47H11ZM21.4 34.8H29.6L25.5 22.5L21.4 34.8Z"
-              fill="#F2F6F8"
-            />
-            <path
-              d="M26.5 47L37.5 17H44L55 47H49L46.7 40H35.3L33 47H26.5ZM36.9 34.8H45.1L41 22.5L36.9 34.8Z"
-              fill="#00F0FF"
-            />
-          </g>
-        </svg>
+      <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 font-mono text-[10px] tracking-[0.22em] uppercase text-[#8E95A2]">
+        <span className="flex items-center gap-2.5">
+          <span className="w-2 h-2 bg-[#00F0FF]" />
+          ALESJO AGOLLI
+        </span>
+        <span>01 HOME · 02 MAIN · 03 CLOSED</span>
+      </div>
 
-        <div className="flex w-60 flex-col gap-3">
-          <span className="relative block h-[2px] w-full bg-[#1A212B] overflow-hidden">
-            <span
-              data-loader-fill="true"
-              className="absolute inset-0 origin-left scale-x-0 bg-[#00F0FF]"
-            />
-          </span>
-          <span className="flex items-baseline justify-between font-mono text-[11px] uppercase tracking-widest text-[#8E9BAE]">
-            <span>Alesjo Agolli</span>
-            <span data-loader-count="true" className="text-[#00F0FF] tabular-nums">
-              000
-            </span>
-          </span>
+      <div className="my-auto flex flex-col items-start gap-6">
+        <svg
+          viewBox="0 0 120 64"
+          className="w-24 sm:w-28 h-auto overflow-visible"
+          fill="none"
+        >
+          <path
+            data-loader-stroke=""
+            d="M8 56 L30 8 L52 56 M16 38 H44 M64 56 L86 8 L108 56 M72 38 H100"
+            stroke="#00F0FF"
+            strokeWidth="4"
+            strokeLinecap="square"
+            strokeLinejoin="miter"
+          />
+        </svg>
+        <div
+          data-loader-word=""
+          className="font-display font-extrabold text-[clamp(2rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.04em] uppercase text-[#F4F5F7]"
+        >
+          ALESJO AGOLLI<span className="text-[#00F0FF]">.</span>
         </div>
+      </div>
+
+      <div className="flex items-end justify-between border-t border-white/[0.08] pt-4">
+        <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-[#8E95A2]">
+          LOADING EXPERIENCE
+        </span>
+        <span
+          data-loader-num=""
+          className="font-display font-extrabold text-3xl sm:text-5xl leading-none tracking-[-0.04em] text-[#00F0FF] tabular-nums"
+        >
+          000
+        </span>
       </div>
     </div>
   );
 };
 
-/**
- * UnyoCorp Master Scroll-Driven Journey Engine (Exact port of unyo-page.js)
- */
+/* ============================================================================
+   2. UNYOCORP MASTER LENIS + GSAP SCROLLTRIGGER ENGINE
+   ============================================================================ */
 export const UnyoJourneyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const scopeRef = useRef<HTMLDivElement | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const root = scopeRef.current;
+  useLayoutEffect(() => {
+    const root = rootRef.current;
     if (!root) return;
 
-    const mm = gsap.matchMedia();
+    // 1. Initialize Lenis smooth scrolling synced with GSAP ScrollTrigger (exact UnyoCorp setup)
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+    });
+    window.__lenis = lenis;
 
-    mm.add(
-      {
-        desktop: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
-        mobile: '(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)',
-      },
-      (context) => {
-        const isDesktop = !!context.conditions?.desktop;
-        const cleanups: (() => void)[] = [];
-        const chapters = gsap.utils.toArray<HTMLElement>('[data-chapter]', root);
+    lenis.on('scroll', ScrollTrigger.update);
 
-        chapters.forEach((chapter, idx) => {
-          const name = chapter.dataset.chapter;
-          const priority = 100 - idx;
-          const track = chapter.querySelector<HTMLElement>(':scope > [data-track]');
-          const sticky = track?.querySelector<HTMLElement>(':scope > [data-sticky]') || null;
-          const nextChapter = chapters[idx + 1];
+    const tickerFn = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tickerFn);
+    gsap.ticker.lagSmoothing(0);
 
-          // 1. ARRIVAL (Hero Section)
-          if (name === 'arrival') {
-            const heroLines = gsap.utils.toArray<HTMLElement>('[data-hero-line]', chapter);
-            const heroSub = chapter.querySelector<HTMLElement>('[data-hero-sub]');
-            const heroCtas = gsap.utils.toArray<HTMLElement>('[data-hero-cta]', chapter);
-            const heroPortraits = gsap.utils.toArray<HTMLElement>('[data-hero-portrait]', chapter);
-            const marksTrack = chapter.querySelector<HTMLElement>('[data-marks-track]');
+    const cleanups: Array<() => void> = [];
 
-            const introTl = gsap.timeline({
-              paused: document.documentElement.dataset.loaded !== 'true',
-              defaults: { ease: EASE.reveal },
-            });
+    const ctx = gsap.context(() => {
+      const arrival = root.querySelector<HTMLElement>('[data-chapter="arrival"]');
+      const work = root.querySelector<HTMLElement>('[data-chapter="work"]');
+      const close = root.querySelector<HTMLElement>('[data-chapter="close"]');
 
-            if (heroPortraits.length) {
-              introTl.fromTo(
-                heroPortraits,
-                { clipPath: 'inset(100% 0 0 0)' },
-                { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: EASE.inOut },
-                0
-              );
-            }
+      /* ----------------------------------------------------------------------
+         A. PAGE 01 (HOME) — PRELOADER + SCROLL-SCRUBBED PARALLAX
+         ---------------------------------------------------------------------- */
+      if (arrival) {
+        const loader = document.querySelector<HTMLElement>('[data-loader]');
+        const stroke = loader?.querySelector<SVGPathElement>('[data-loader-stroke]');
+        const word = loader?.querySelector<HTMLElement>('[data-loader-word]');
+        const num = loader?.querySelector<HTMLElement>('[data-loader-num]');
 
-            heroLines.forEach((line, lIdx) => {
-              introTl.from(line, { yPercent: 110, duration: 1.1 }, 0.18 + 0.09 * lIdx);
-            });
+        const lines = arrival.querySelectorAll<HTMLElement>('[data-line]');
+        const rules = arrival.querySelectorAll<HTMLElement>('[data-rule]');
+        const vrules = arrival.querySelectorAll<HTMLElement>('[data-vrule]');
+        const meta = arrival.querySelectorAll<HTMLElement>('[data-meta]');
+        const portrait = arrival.querySelector<HTMLElement>('[data-portrait]');
+        const frame = arrival.querySelector<HTMLElement>('[data-frame]');
+        const homeBar = arrival.querySelector<HTMLElement>('[data-home-bar]');
 
-            if (heroSub) {
-              introTl.from(heroSub, { autoAlpha: 0, y: 18, duration: 0.8 }, 0.65);
-            }
+        gsap.set(lines, { yPercent: 110 });
+        gsap.set(rules, { scaleX: 0, transformOrigin: 'left center' });
+        gsap.set(vrules, { scaleY: 0, transformOrigin: 'top center' });
+        gsap.set(meta, { opacity: 0, y: 12 });
+        if (portrait) gsap.set(portrait, { scale: 1.12, opacity: 0 });
+        if (frame) gsap.set(frame, { clipPath: 'inset(12% 0% 12% 0%)' });
 
-            if (heroCtas.length) {
-              introTl.from(
-                heroCtas,
-                { autoAlpha: 0, y: 14, duration: 0.7, stagger: 0.08 },
-                0.75
-              );
-            }
-
-            const playIntro = () => introTl.play();
-            window.addEventListener('journey:ready', playIntro, { once: true });
-            const fallbackTimer = window.setTimeout(playIntro, 1800);
-
-            // Velocity-reactive marquee (exact UnyoCorp logic)
-            let marqueeTween: gsap.core.Tween | null = null;
-            let velTrigger: ScrollTrigger | null = null;
-            if (marksTrack) {
-              marqueeTween = gsap.to(marksTrack, {
-                xPercent: -50,
-                ease: 'none',
-                duration: 24,
-                repeat: -1,
-              });
-              velTrigger = ScrollTrigger.create({
-                start: 0,
-                end: 'max',
-                refreshPriority: priority,
-                onUpdate: (self) => {
-                  if (!marqueeTween) return;
-                  const boost = 1 + Math.min(6, Math.abs(self.getVelocity()) / 260);
-                  marqueeTween.timeScale(Math.max(marqueeTween.timeScale(), boost));
-                  gsap.to(marqueeTween, {
-                    timeScale: 1,
-                    duration: 1.4,
-                    ease: 'power2.out',
-                    overwrite: 'auto',
-                  });
-                },
-              });
-            }
-
-            cleanups.push(() => {
-              window.removeEventListener('journey:ready', playIntro);
-              window.clearTimeout(fallbackTimer);
-              introTl.kill();
-              marqueeTween?.kill();
-              velTrigger?.kill();
-            });
-          }
-
-          // 2. CLAIM & METHOD (About Section — Scroll-Scrubbed Lines, Numerals & Phase Swap)
-          if (name === 'claim') {
-            const claimLines = gsap.utils.toArray<HTMLElement>('[data-claim-line]', chapter);
-            const facts = gsap.utils.toArray<HTMLElement>('[data-fact]', chapter);
-            const stats = gsap.utils.toArray<HTMLElement>('[data-stat-value]', chapter);
-            const swapWords = gsap.utils.toArray<HTMLElement>('[data-swap-word]', chapter);
-            const phaseCards = gsap.utils.toArray<HTMLElement>('[data-phase]', chapter);
-
-            let counted = false;
-            const triggerCount = () => {
-              if (!counted) {
-                counted = true;
-                stats.forEach((s) => animateCount(s));
-              }
-            };
-
-            if (isDesktop && track) {
-              const tl = gsap.timeline({
-                scrollTrigger: {
-                  trigger: track,
-                  start: 'top top',
-                  end: 'bottom 200%',
-                  scrub: 0.3,
-                  refreshPriority: priority,
-                },
-                defaults: { ease: 'none' },
-              });
-
-              if (claimLines.length) {
-                tl.fromTo(
-                  claimLines,
-                  { yPercent: 75, opacity: 0 },
-                  {
-                    immediateRender: true,
-                    yPercent: 0,
-                    opacity: 1,
-                    stagger: 0.08,
-                    duration: 0.35,
-                    ease: EASE.soft,
-                  },
-                  0
-                );
-              }
-
-              if (facts.length) {
-                tl.fromTo(
-                  facts,
-                  { y: 44, opacity: 0 },
-                  {
-                    immediateRender: true,
-                    y: 0,
-                    opacity: 1,
-                    stagger: 0.05,
-                    duration: 0.25,
-                    ease: EASE.soft,
-                  },
-                  0.18
-                );
-              }
-
-              tl.add(triggerCount, 0.22);
-
-              // Scroll-scrubbed phase word swap (Design -> Engineer -> Scale -> Automate)
-              const count = Math.min(swapWords.length, phaseCards.length);
-              if (count >= 2) {
-                gsap.set(swapWords.slice(1), { yPercent: 100, autoAlpha: 0 });
-                const step = 0.65 / count;
-                for (let e = 1; e < count; e++) {
-                  const t = 0.3 + e * step;
-                  tl.to(
-                    swapWords[e - 1],
-                    { yPercent: -100, autoAlpha: 0, duration: step * 0.45, ease: EASE.soft },
-                    t
-                  ).fromTo(
-                    swapWords[e],
-                    { yPercent: 100, autoAlpha: 0 },
-                    {
-                      immediateRender: false,
-                      yPercent: 0,
-                      autoAlpha: 1,
-                      duration: step * 0.45,
-                      ease: EASE.soft,
-                    },
-                    t
-                  );
-                }
-              }
-
-              cleanups.push(() => {
-                tl.scrollTrigger?.kill();
-                tl.kill();
-              });
-            } else {
-              const st = ScrollTrigger.create({
-                trigger: chapter,
-                start: 'top 75%',
-                once: true,
-                onEnter: triggerCount,
-              });
-              cleanups.push(() => st.kill());
-            }
-          }
-
-          // 3. WORK (Selected Projects — Exact UnyoCorp Scroll-Scrubbed Scene Wipes!)
-          if (name === 'work') {
-            const scenes = gsap.utils.toArray<HTMLElement>('[data-scene]', chapter);
-            const sceneLinks = gsap.utils.toArray<HTMLElement>('[data-scene-link]', chapter);
-            const sceneCount = chapter.querySelector<HTMLElement>('[data-scene-count]');
-            const total = scenes.length;
-
-            if (isDesktop && track && total > 1) {
-              chapter.dataset.scenesLive = 'true';
-              const medias = scenes.map((s) => s.querySelector<HTMLElement>('[data-scene-media]'));
-              const copies = scenes.map((s) =>
-                gsap.utils.toArray<HTMLElement>('[data-scene-copy] > *', s)
-              );
-
-              const setActiveScene = (idxNum: number) => {
-                scenes.forEach((s, r) => s.toggleAttribute('data-current', r === idxNum));
-                sceneLinks.forEach((l, r) => {
-                  if (r === idxNum) l.setAttribute('aria-current', 'true');
-                  else l.removeAttribute('aria-current');
-                });
-                if (sceneCount) {
-                  sceneCount.textContent = String(idxNum + 1).padStart(2, '0');
-                }
-              };
-
-              const segments = total - 1;
-              const segLen = 1 / segments;
-
-              const tl = gsap.timeline({
-                scrollTrigger: {
-                  trigger: track,
-                  start: 'top top',
-                  end: 'bottom 200%',
-                  scrub: 0.3,
-                  refreshPriority: priority,
-                  onUpdate: (self) => {
-                    const activeIdx = Math.min(total - 1, Math.round(self.progress * segments));
-                    setActiveScene(activeIdx);
-                  },
-                },
-                defaults: { ease: 'none' },
-              });
-
-              for (let e = 1; e < total; e++) {
-                const startAt = (e - 1) * segLen + 0.18 * segLen;
-                const dur = 0.72 * segLen;
-
-                // Wipe Scene e up from yPercent: 100 -> 0 over Scene e-1
-                tl.fromTo(
-                  scenes[e],
-                  { yPercent: 100 },
-                  { immediateRender: true, yPercent: 0, duration: dur },
-                  startAt
-                );
-
-                // Inner media counter-parallax
-                if (medias[e]) {
-                  tl.fromTo(
-                    medias[e],
-                    { yPercent: -12 },
-                    { immediateRender: true, yPercent: 0, duration: dur },
-                    startAt
-                  );
-                }
-                if (medias[e - 1]) {
-                  tl.to(medias[e - 1], { yPercent: -8, duration: dur }, startAt);
-                }
-
-                // Stagger copy items of incoming scene
-                if (copies[e].length) {
-                  tl.fromTo(
-                    copies[e],
-                    { y: 36, opacity: 0 },
-                    {
-                      immediateRender: true,
-                      y: 0,
-                      opacity: 1,
-                      stagger: 0.03,
-                      duration: 0.5 * dur,
-                      ease: EASE.soft,
-                    },
-                    startAt + 0.42 * dur
-                  );
-                }
-              }
-
-              setActiveScene(0);
-
-              cleanups.push(() => {
-                tl.scrollTrigger?.kill();
-                tl.kill();
-                delete chapter.dataset.scenesLive;
-                gsap.set([...scenes, ...medias, ...copies.flat()].filter(Boolean), {
-                  clearProps: 'transform,opacity',
-                });
-              });
-            }
-          }
-
-          // 4. STACK & RECORD (Counter-Parallax & ClipPath Reveal)
-          if (name === 'stack') {
-            const splitCols = gsap.utils.toArray<HTMLElement>('[data-split-col]', chapter);
-            const recordCards = gsap.utils.toArray<HTMLElement>('[data-record-card]', chapter);
-            const stackRows = gsap.utils.toArray<HTMLElement>('[data-stack-row]', chapter);
-
-            if (isDesktop && track) {
-              const tl = gsap.timeline({
-                scrollTrigger: {
-                  trigger: track,
-                  start: 'top top',
-                  end: 'bottom 200%',
-                  scrub: 0.3,
-                  refreshPriority: priority,
-                },
-                defaults: { ease: 'none' },
-              });
-
-              splitCols.forEach((col, cIdx) => {
-                const dir = cIdx % 2 === 0 ? 1 : -1;
-                tl.fromTo(
-                  col,
-                  { yPercent: 5 * dir },
-                  { immediateRender: true, yPercent: -5 * dir, duration: 0.8 },
-                  0
-                );
-              });
-
-              if (stackRows.length) {
-                tl.fromTo(
-                  stackRows,
-                  { opacity: 0, x: -20 },
-                  {
-                    immediateRender: true,
-                    opacity: 1,
-                    x: 0,
-                    stagger: 0.04,
-                    duration: 0.25,
-                    ease: EASE.soft,
-                  },
-                  0.05
-                );
-              }
-
-              if (recordCards.length) {
-                tl.fromTo(
-                  recordCards,
-                  { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
-                  {
-                    immediateRender: true,
-                    clipPath: 'inset(0 0% 0 0)',
-                    opacity: 1,
-                    stagger: 0.12,
-                    duration: 0.38,
-                    ease: EASE.inOut,
-                  },
-                  0.15
-                );
-              }
-
-              cleanups.push(() => {
-                tl.scrollTrigger?.kill();
-                tl.kill();
-              });
-            }
-          }
-
-          // 5. MASTER SHEET CURTAIN SCALE & SCRIM (Exact UnyoCorp [data-sticky] transition)
-          if (isDesktop && track && sticky && nextChapter) {
-            const nextTrigger =
-              nextChapter.querySelector<HTMLElement>(':scope > [data-track]') || nextChapter;
-            const scrim = sticky.querySelector<HTMLElement>(':scope > [data-sticky-scrim]');
-
-            const curtainTl = gsap.timeline({
-              defaults: { ease: 'none' },
-              scrollTrigger: {
-                trigger: nextTrigger,
-                start: 'top bottom',
-                end: 'top top',
-                scrub: true,
-                refreshPriority: priority,
-                onToggle: (self) => {
-                  sticky.style.willChange = self.isActive ? 'transform' : '';
-                },
-              },
-            });
-
-            curtainTl.to(sticky, { scale: 0.96 }, 0);
-            if (scrim) {
-              curtainTl.to(scrim, { opacity: 0.42 }, 0);
-            }
-
-            cleanups.push(() => {
-              curtainTl.scrollTrigger?.kill();
-              curtainTl.kill();
-              gsap.set(sticky, { clearProps: 'transform,willChange' });
-              if (scrim) gsap.set(scrim, { clearProps: 'opacity' });
-            });
-          }
+        const counter = { v: 0 };
+        const introTl = gsap.timeline({
+          defaults: { ease: 'power3.out' },
+          onComplete: () => {
+            document.documentElement.dataset.loaded = 'true';
+            ScrollTrigger.refresh();
+          },
         });
 
-        // Batch reveal any [data-reveal] elements (mobile & non-scrubbed sections)
-        const revealEls = gsap.utils.toArray<HTMLElement>('[data-reveal]', root);
-        cleanups.push(batchReveal(revealEls));
+        if (loader && document.documentElement.dataset.loaded !== 'true') {
+          if (stroke) {
+            gsap.set(stroke, { strokeDasharray: 320, strokeDashoffset: 320 });
+            introTl.to(stroke, { strokeDashoffset: 0, duration: 0.65, ease: 'power2.inOut' }, 0);
+          }
+          if (word) {
+            gsap.set(word, { opacity: 0, y: 10 });
+            introTl.to(word, { opacity: 1, y: 0, duration: 0.4 }, 0.15);
+          }
+          if (num) {
+            introTl.to(
+              counter,
+              {
+                v: 100,
+                duration: 0.7,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  num.textContent = String(Math.round(counter.v)).padStart(3, '0');
+                },
+              },
+              0
+            );
+          }
+          introTl.to(loader, { yPercent: -100, duration: 0.7, ease: 'expo.inOut' }, 0.72);
+        }
 
-        return () => {
-          cleanups.forEach((fn) => fn());
-        };
+        const startAt = loader && document.documentElement.dataset.loaded !== 'true' ? 0.85 : 0.05;
+        introTl
+          .to(rules, { scaleX: 1, duration: 0.7, stagger: 0.06, ease: 'expo.out' }, startAt)
+          .to(vrules, { scaleY: 1, duration: 0.8, ease: 'expo.out' }, startAt + 0.05)
+          .to(lines, { yPercent: 0, duration: 0.85, stagger: 0.07, ease: 'expo.out' }, startAt + 0.08);
+
+        if (frame) {
+          introTl.to(frame, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'expo.out' }, startAt + 0.1);
+        }
+        if (portrait) {
+          introTl.to(portrait, { scale: 1, opacity: 1, duration: 1.0, ease: 'expo.out' }, startAt + 0.1);
+        }
+        introTl.to(meta, { opacity: 1, y: 0, duration: 0.5, stagger: 0.05 }, startAt + 0.3);
+
+        // Scroll-scrubbed timeline while scrolling through Page 01 (HOME)
+        const track = arrival.querySelector<HTMLElement>('[data-track]') || arrival;
+        const headWrap = arrival.querySelector<HTMLElement>('[data-headline-wrap]');
+        const line1 = arrival.querySelector<HTMLElement>('[data-line-1]');
+        const line2 = arrival.querySelector<HTMLElement>('[data-line-2]');
+        const line3 = arrival.querySelector<HTMLElement>('[data-line-3]');
+
+        const scrubTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: track,
+            start: 'top top',
+            end: 'bottom 200%',
+            scrub: 0.25,
+          },
+        });
+
+        if (line1) scrubTl.to(line1, { xPercent: -8, yPercent: -25, ease: 'none' }, 0);
+        if (line2) scrubTl.to(line2, { xPercent: 8, yPercent: -20, ease: 'none' }, 0);
+        if (line3) scrubTl.to(line3, { yPercent: -30, opacity: 0.25, ease: 'none' }, 0);
+        if (headWrap) scrubTl.to(headWrap, { opacity: 0.35, ease: 'none' }, 0);
+        if (portrait) scrubTl.to(portrait, { scale: 1.15, yPercent: -8, ease: 'none' }, 0);
+        if (frame) scrubTl.to(frame, { yPercent: -6, ease: 'none' }, 0);
+        if (homeBar) scrubTl.fromTo(homeBar, { scaleX: 0 }, { scaleX: 1, ease: 'none' }, 0);
       }
-    );
 
-    return () => mm.revert();
+      /* ----------------------------------------------------------------------
+         B. PAGE 02 (MAIN) — VERTICAL FULL-SCREEN SCENE WIPES (01 -> 02 -> 03)
+         ---------------------------------------------------------------------- */
+      if (work) {
+        const scenes = Array.from(work.querySelectorAll<HTMLElement>('[data-scene]'));
+        const countEl = work.querySelector<HTMLElement>('[data-scene-current]');
+        const workBar = work.querySelector<HTMLElement>('[data-work-bar]');
+        const pills = Array.from(work.querySelectorAll<HTMLElement>('[data-scene-pill]'));
+        const track = work.querySelector<HTMLElement>('[data-track]') || work;
+
+        if (scenes.length > 1) {
+          scenes.forEach((scene, idx) => {
+            gsap.set(scene, {
+              zIndex: idx + 1,
+              yPercent: idx === 0 ? 0 : 100,
+              scale: 1,
+              transformOrigin: '50% 0%',
+            });
+            const scrim = scene.querySelector<HTMLElement>('[data-scene-scrim]');
+            if (scrim) gsap.set(scrim, { opacity: 0 });
+          });
+
+          const totalTransitions = scenes.length - 1;
+          const setActiveScene = (index: number) => {
+            if (countEl) {
+              countEl.textContent = String(index + 1).padStart(2, '0');
+            }
+            pills.forEach((pill, i) => {
+              if (i === index) {
+                pill.dataset.active = 'true';
+              } else {
+                delete pill.dataset.active;
+              }
+            });
+          };
+          setActiveScene(0);
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: track,
+              start: 'top top',
+              end: 'bottom 200%',
+              scrub: 0.3,
+              onUpdate: (self) => {
+                const idx = Math.min(
+                  scenes.length - 1,
+                  Math.max(0, Math.round(self.progress * totalTransitions))
+                );
+                setActiveScene(idx);
+                if (workBar) {
+                  gsap.set(workBar, { scaleX: self.progress });
+                }
+              },
+            },
+          });
+
+          for (let i = 0; i < totalTransitions; i++) {
+            const currentScene = scenes[i];
+            const nextScene = scenes[i + 1];
+            const currentScrim = currentScene.querySelector<HTMLElement>('[data-scene-scrim]');
+            const currentMedia = currentScene.querySelector<HTMLElement>('[data-split-media-inner]');
+            const nextMedia = nextScene.querySelector<HTMLElement>('[data-split-media-inner]');
+            const nextLines = nextScene.querySelectorAll<HTMLElement>('[data-scene-line]');
+            const nextMeta = nextScene.querySelectorAll<HTMLElement>('[data-scene-meta]');
+            const pos = i;
+
+            if (nextLines.length) gsap.set(nextLines, { yPercent: 108 });
+            if (nextMeta.length) gsap.set(nextMeta, { opacity: 0, y: 18 });
+            if (nextMedia) gsap.set(nextMedia, { yPercent: -18, scale: 1.16 });
+
+            // Next scene wipes up from bottom (yPercent: 100 -> 0) over current scene
+            tl.fromTo(
+              nextScene,
+              { yPercent: 100 },
+              { yPercent: 0, duration: 1, ease: 'power2.inOut' },
+              pos
+            );
+
+            // Current scene scales down & darkens underneath
+            tl.to(
+              currentScene,
+              { scale: 0.92, yPercent: -4, duration: 1, ease: 'power2.inOut' },
+              pos
+            );
+
+            if (currentScrim) {
+              tl.to(currentScrim, { opacity: 0.65, duration: 1, ease: 'none' }, pos);
+            }
+            if (currentMedia) {
+              tl.to(currentMedia, { yPercent: 10, scale: 1.06, duration: 1, ease: 'none' }, pos);
+            }
+            if (nextMedia) {
+              tl.to(nextMedia, { yPercent: 0, scale: 1, duration: 1, ease: 'power2.out' }, pos);
+            }
+            if (nextLines.length) {
+              tl.to(
+                nextLines,
+                { yPercent: 0, duration: 0.6, stagger: 0.05, ease: 'power3.out' },
+                pos + 0.32
+              );
+            }
+            if (nextMeta.length) {
+              tl.to(
+                nextMeta,
+                { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out' },
+                pos + 0.42
+              );
+            }
+          }
+        }
+
+        // Velocity-reactive stack ticker at bottom of MAIN
+        const marqueeTrack = work.querySelector<HTMLElement>('[data-marquee-track]');
+        if (marqueeTrack) {
+          let xPercent = 0;
+          let direction = -1;
+          const tick = () => {
+            const st = ScrollTrigger.getAll()[0];
+            const vel = st ? Math.min(Math.abs(st.getVelocity()) / 700, 5) : 0;
+            xPercent += 0.045 * (1 + vel) * direction;
+            if (xPercent <= -50) xPercent += 50;
+            if (xPercent > 0) xPercent -= 50;
+            gsap.set(marqueeTrack, { xPercent });
+          };
+          gsap.ticker.add(tick);
+          const dirTrigger = ScrollTrigger.create({
+            onUpdate: (self) => {
+              if (self.direction !== 0) direction = -self.direction;
+            },
+          });
+          cleanups.push(() => {
+            gsap.ticker.remove(tick);
+            dirTrigger.kill();
+          });
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         C. PAGE 03 (CLOSED / FOOTER) — CURTAIN REVEAL ANIMATION
+         ---------------------------------------------------------------------- */
+      if (close) {
+        const closeLines = close.querySelectorAll<HTMLElement>('[data-close-line]');
+        const closeCards = close.querySelectorAll<HTMLElement>('[data-close-card]');
+        if (closeLines.length) gsap.set(closeLines, { yPercent: 105 });
+        if (closeCards.length) gsap.set(closeCards, { opacity: 0, y: 24 });
+
+        ScrollTrigger.create({
+          trigger: close,
+          start: 'top 65%',
+          onEnter: () => {
+            gsap.to(closeLines, {
+              yPercent: 0,
+              duration: 0.85,
+              stagger: 0.08,
+              ease: 'expo.out',
+              overwrite: true,
+            });
+            gsap.to(closeCards, {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              stagger: 0.07,
+              delay: 0.15,
+              ease: 'power3.out',
+              overwrite: true,
+            });
+          },
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         D. MASTER SHEET-OVER-SHEET CURTAIN TRANSITIONS
+         When next sheet slides up over current sticky sheet, current sheet
+         scales down (0.92), shifts up (-3%), and scrim darkens (0.6).
+         ---------------------------------------------------------------------- */
+      const sheets = Array.from(root.querySelectorAll<HTMLElement>('[data-sheet]'));
+      for (let i = 0; i < sheets.length - 1; i++) {
+        const currentSheet = sheets[i];
+        const nextSheet = sheets[i + 1];
+        const sticky = currentSheet.querySelector<HTMLElement>('[data-sticky]');
+        const scrim = currentSheet.querySelector<HTMLElement>('[data-sticky-scrim]');
+        const nextTrack = nextSheet.querySelector<HTMLElement>('[data-track]') || nextSheet;
+
+        if (sticky) {
+          const sheetTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: nextTrack,
+              start: 'top bottom',
+              end: 'top top',
+              scrub: true,
+            },
+          });
+
+          sheetTl.to(
+            sticky,
+            {
+              scale: 0.92,
+              yPercent: -3,
+              ease: 'none',
+            },
+            0
+          );
+
+          if (scrim) {
+            sheetTl.to(scrim, { opacity: 0.65, ease: 'none' }, 0);
+          }
+        }
+      }
+    }, root);
+
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener('load', onLoad);
+
+    return () => {
+      window.removeEventListener('load', onLoad);
+      cleanups.forEach((fn) => fn());
+      ctx.revert();
+      gsap.ticker.remove(tickerFn);
+      lenis.destroy();
+      delete window.__lenis;
+    };
   }, []);
 
   return (
-    <div ref={scopeRef} data-journey="true">
+    <div ref={rootRef} data-journey="">
       {children}
+    </div>
+  );
+};
+
+/* ============================================================================
+   3. UTILITY REVEAL HELPERS
+   ============================================================================ */
+interface RevealProps {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  direction?: 'up' | 'down' | 'left' | 'right' | 'scale';
+  threshold?: number;
+}
+
+export const Reveal: React.FC<RevealProps> = ({ children, className = '' }) => {
+  return <div className={className}>{children}</div>;
+};
+
+export const SpotlightCard: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  spotlightColor?: string;
+}> = ({ children, className = '' }) => {
+  return <div className={`relative overflow-hidden ${className}`}>{children}</div>;
+};
+
+export const AnimatedCounter: React.FC<{
+  value: string;
+  className?: string;
+}> = ({ value, className = '' }) => {
+  return <span className={className}>{value}</span>;
+};
+
+export const ScrollProgressBar: React.FC = () => {
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!barRef.current) return;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      barRef.current.style.width = `${pct}%`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-transparent pointer-events-none">
+      <div
+        ref={barRef}
+        className="h-full bg-[#00F0FF] transition-[width] duration-75 ease-out"
+        style={{ width: '0%' }}
+      />
     </div>
   );
 };

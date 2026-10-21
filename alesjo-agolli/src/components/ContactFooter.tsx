@@ -1,207 +1,202 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Copy, Check, FileText } from 'lucide-react';
-import { DEFAULT_BRAND_TOKENS, PROFILE_DATA } from '../data/portfolioData';
+import React from 'react';
+import {
+  Mail,
+  Phone,
+  MessageCircle,
+  Github,
+  Linkedin,
+  FileText,
+  ArrowUpRight,
+  ArrowUp,
+} from 'lucide-react';
 
 interface ContactFooterProps {
-  onOpenCvModal: () => void;
+  onOpenCV: () => void;
 }
 
-const FOCUS_OPTIONS = ['Web Platform', 'Full-Stack App', 'Local AI / Ollama', 'Role / Inquiry'];
-
-export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) => {
-  const [selectedFocus, setSelectedFocus] = useState<string>(FOCUS_OPTIONS[0]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [brief, setBrief] = useState('');
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  const [tiranaTime, setTiranaTime] = useState<string>('--:--');
-
-  useEffect(() => {
-    const updateClock = () => {
-      try {
-        const fmt = new Intl.DateTimeFormat('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-          timeZone: 'Europe/Tirane',
-        });
-        setTiranaTime(fmt.format(new Date()));
-      } catch {
-        setTiranaTime('CET');
-      }
-    };
-    updateClock();
-    const timer = setInterval(updateClock, 15000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(DEFAULT_BRAND_TOKENS.email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.location.href = `mailto:${DEFAULT_BRAND_TOKENS.email}?subject=${encodeURIComponent(
-      `[${selectedFocus}] Inquiry from ${name}`
-    )}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${brief}`)}`;
+export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCV }) => {
+  const scrollToTop = () => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
-    <section
-      id="contact"
-      data-chapter="start"
-      data-sheet="true"
-      className="relative z-20 bg-[#060708]"
+    <footer
+      id="closed"
+      data-chapter="close"
+      data-sheet=""
+      className="relative z-20 min-h-screen flex flex-col justify-between pt-[72px] bg-[#060708] border-t border-white/[0.14] overflow-hidden shadow-[0_-32px_80px_rgba(0,0,0,0.9)]"
     >
-      <div className="py-16 sm:py-20 md:py-28 border-t border-b border-[#1A212B] bg-[#060708]">
-        <div className="max-w-[100rem] mx-auto px-4 sm:px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            {/* Left 5 Columns */}
-            <div data-reveal="true" className="lg:col-span-5">
-              <div className="eyebrow mb-2 flex items-center gap-2.5">
-                <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
-                <span>06 / Contact</span>
-              </div>
-              <h2 className="font-display text-display-lg text-[#F2F6F8]">
-                Let&apos;s build <span className="text-[#00F0FF]">together.</span>
-              </h2>
-              <p className="mt-3 text-sm text-[#8E9BAE] max-w-md leading-relaxed">
-                Available for full-stack web development, UI/UX engineering, and local AI
-                integrations.
-              </p>
+      {/* Top Status Bar */}
+      <div className="w-full border-b border-white/[0.08]">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-3.5 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.2em] uppercase text-[#8E95A2]">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 bg-[#00F0FF]" />
+            <span className="text-[#F4F5F7] font-semibold">03 / CLOSED</span>
+          </div>
+          <div className="hidden sm:block">TIRANA, ALBANIA · UTC+1</div>
+          <div className="flex items-center gap-2 text-[#00F0FF]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
+            <span>OPEN FOR PROJECTS</span>
+          </div>
+        </div>
+      </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
-                >
-                  {copiedEmail ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-[#00F0FF]" />
-                      <span>Copied Email</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-[#00F0FF]" />
-                      <span>{DEFAULT_BRAND_TOKENS.email}</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={onOpenCvModal}
-                  className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
-                >
-                  <FileText className="w-3.5 h-3.5 text-[#00F0FF]" />
-                  <span>Executive CV</span>
-                </button>
+      {/* Main Closing Content */}
+      <div className="max-w-[1600px] w-full mx-auto px-5 sm:px-10 lg:px-14 py-10 lg:py-14 my-auto space-y-10">
+        {/* Giant Closing Headline */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <h2 className="font-display font-extrabold text-[clamp(2.75rem,7.2vw,6.75rem)] text-[#F4F5F7] tracking-[-0.045em] leading-[0.88] uppercase">
+            <span className="block overflow-hidden pb-1">
+              <span data-close-line="" className="block">
+                LET&apos;S BUILD
+              </span>
+            </span>
+            <span className="block overflow-hidden pb-1">
+              <span data-close-line="" className="block text-[#00F0FF]">
+                TOGETHER<span className="text-[#F4F5F7]">.</span>
+              </span>
+            </span>
+          </h2>
+
+          <button
+            onClick={onOpenCV}
+            className="self-start lg:self-end inline-flex items-center gap-3 px-6 py-4 bg-[#F4F5F7] text-[#060708] font-mono text-xs font-semibold uppercase tracking-[0.18em] hover:bg-[#00F0FF] transition-colors cursor-pointer"
+          >
+            <FileText className="w-4 h-4" />
+            <span>OPEN EXECUTIVE CV</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* 4 Clean Architectural Contact Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.1] border border-white/[0.1]">
+          {/* 1. Direct Phone */}
+          <a
+            data-close-card=""
+            href="tel:+355676770825"
+            className="group bg-[#0A0C0F] hover:bg-[#10141A] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#00F0FF]">
+                01 / PHONE
+              </span>
+              <Phone className="w-4 h-4 text-[#8E95A2] group-hover:text-[#00F0FF] transition-colors" />
+            </div>
+            <div>
+              <div className="font-display font-extrabold text-xl sm:text-2xl text-[#F4F5F7] group-hover:text-[#00F0FF] transition-colors">
+                +355 67 677 0825
+              </div>
+              <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#8E95A2] mt-1">
+                DIRECT CALL
               </div>
             </div>
+          </a>
 
-            {/* Right 7 Columns: UnyoCorp Tag-Qualifier Form */}
-            <div data-reveal="true" className="lg:col-span-7">
-              <form
-                onSubmit={handleSubmit}
-                className="bg-[#0C0F14] border border-[#1A212B] p-6 sm:p-8 space-y-5"
+          {/* 2. WhatsApp Direct */}
+          <a
+            data-close-card=""
+            href="https://wa.me/355676770825"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-[#0A0C0F] hover:bg-[#10141A] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#00F0FF]">
+                02 / WHATSAPP
+              </span>
+              <MessageCircle className="w-4 h-4 text-[#8E95A2] group-hover:text-[#00F0FF] transition-colors" />
+            </div>
+            <div>
+              <div className="font-display font-extrabold text-xl sm:text-2xl text-[#F4F5F7] group-hover:text-[#00F0FF] transition-colors">
+                +355 67 677 0825
+              </div>
+              <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#8E95A2] mt-1">
+                MESSAGE ON WHATSAPP ↗
+              </div>
+            </div>
+          </a>
+
+          {/* 3. Email */}
+          <a
+            data-close-card=""
+            href="mailto:agollales@gmail.com"
+            className="group bg-[#0A0C0F] hover:bg-[#10141A] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#00F0FF]">
+                03 / EMAIL
+              </span>
+              <Mail className="w-4 h-4 text-[#8E95A2] group-hover:text-[#00F0FF] transition-colors" />
+            </div>
+            <div>
+              <div className="font-display font-extrabold text-lg sm:text-xl text-[#F4F5F7] group-hover:text-[#00F0FF] transition-colors break-all">
+                agollales@gmail.com
+              </div>
+              <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#8E95A2] mt-1">
+                SEND INQUIRY ↗
+              </div>
+            </div>
+          </a>
+
+          {/* 4. GitHub & LinkedIn */}
+          <div
+            data-close-card=""
+            className="bg-[#0A0C0F] p-6 sm:p-7 flex flex-col justify-between gap-6"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#00F0FF]">
+                04 / SOCIALS
+              </span>
+              <ArrowUpRight className="w-4 h-4 text-[#8E95A2]" />
+            </div>
+            <div className="flex flex-col gap-2.5">
+              <a
+                href="https://github.com/agollales-gif"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-between font-display font-bold text-sm uppercase tracking-wider text-[#F4F5F7] hover:text-[#00F0FF] transition-colors"
               >
-                <div className="flex flex-wrap gap-1.5">
-                  {FOCUS_OPTIONS.map((opt) => {
-                    const active = selectedFocus === opt;
-                    return (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setSelectedFocus(opt)}
-                        className={`tag ${
-                          active ? '!bg-[#00F0FF] !text-[#060708] !border-[#00F0FF]' : ''
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Name"
-                    className="w-full bg-transparent border-b border-[#1A212B] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#525E6F] transition-colors"
-                  />
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    className="w-full bg-transparent border-b border-[#1A212B] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#525E6F] transition-colors"
-                  />
-                </div>
-
-                <input
-                  type="text"
-                  required
-                  value={brief}
-                  onChange={(e) => setBrief(e.target.value)}
-                  placeholder="Short project or role summary..."
-                  className="w-full bg-transparent border-b border-[#1A212B] focus:border-[#00F0FF] outline-none py-2.5 text-sm text-[#F2F6F8] placeholder:text-[#525E6F] transition-colors"
-                />
-
-                <div className="flex items-center justify-end pt-1">
-                  <button type="submit" className="btn btn-primary w-full sm:w-auto">
-                    <span>Send Brief</span>
-                    <ArrowRight className="w-4 h-4 btn-icon" />
-                  </button>
-                </div>
-              </form>
+                <span className="flex items-center gap-2">
+                  <Github className="w-4 h-4 text-[#00F0FF]" />
+                  GITHUB
+                </span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/alesjo-agolli-a82223361/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-between font-display font-bold text-sm uppercase tracking-wider text-[#F4F5F7] hover:text-[#00F0FF] transition-colors pt-2 border-t border-white/[0.08]"
+              >
+                <span className="flex items-center gap-2">
+                  <Linkedin className="w-4 h-4 text-[#00F0FF]" />
+                  LINKEDIN
+                </span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Ultra-Minimal Responsive Single-Bar Footer */}
-      <footer className="bg-[#060708] py-4 sm:py-5">
-        <div className="max-w-[100rem] mx-auto px-4 sm:px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs text-[#8E9BAE]">
-          <div className="flex items-center gap-2.5">
-            <span className="h-2 w-2 bg-[#00F0FF]" />
-            <span className="text-[#F2F6F8] font-display font-semibold">Alesjo Agolli</span>
-            <span>· {PROFILE_DATA.location}</span>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-            <a
-              href={`https://github.com/${DEFAULT_BRAND_TOKENS.githubUser}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#00F0FF] transition-colors"
-            >
-              GitHub ↗
-            </a>
-            <a
-              href={`https://www.linkedin.com/in/${DEFAULT_BRAND_TOKENS.linkedinUser}/`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#00F0FF] transition-colors"
-            >
-              LinkedIn ↗
-            </a>
-            <button
-              type="button"
-              onClick={onOpenCvModal}
-              className="text-[#00F0FF] hover:underline"
-            >
-              CV
-            </button>
-            <span className="text-[#525E6F]">TIA {tiranaTime}</span>
-          </div>
+      {/* Bottom Colophon */}
+      <div className="w-full border-t border-white/[0.08] bg-[#040506]">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-4 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.18em] uppercase text-[#8E95A2]">
+          <span>© {new Date().getFullYear()} ALESJO AGOLLI</span>
+          <span className="hidden sm:inline">01 HOME · 02 MAIN · 03 CLOSED</span>
+          <button
+            onClick={scrollToTop}
+            className="inline-flex items-center gap-2 text-[#00F0FF] hover:text-[#F4F5F7] transition-colors cursor-pointer"
+          >
+            <span>BACK TO TOP</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </button>
         </div>
-      </footer>
-    </section>
+      </div>
+    </footer>
   );
 };

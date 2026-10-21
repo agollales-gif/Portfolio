@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   ExternalLink,
   Mail,
+  Phone,
   Github,
   Linkedin,
 } from 'lucide-react';
@@ -36,7 +37,8 @@ export const CvPreviewModal: React.FC<CvPreviewModalProps> = ({ isOpen, onClose 
   const handleDownloadMarkdownCv = () => {
     const cvMarkdown = `# ALESJO AGOLLI
 Location: Tirana, Albania
-Core Roles: Full-Stack Web Developer | System Administrator | AI Integration Specialist
+Core Roles: Full-Stack Web Developer | AI Integration Specialist | UI/UX Engineer
+Phone: +355 67 677 0825
 Email: ${DEFAULT_BRAND_TOKENS.email}
 GitHub: https://github.com/${DEFAULT_BRAND_TOKENS.githubUser}
 LinkedIn: https://www.linkedin.com/in/${DEFAULT_BRAND_TOKENS.linkedinUser}/
@@ -144,6 +146,13 @@ ${e.highlights.map((h) => `- ${h}`).join('\n')}`
                   <MapPin className="w-3.5 h-3.5 text-[#00F0FF]" />
                   {PROFILE_DATA.location}
                 </span>
+                <a
+                  href="tel:+355676770825"
+                  className="inline-flex items-center gap-1 hover:text-[#00F0FF]"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#00F0FF]" />
+                  +355 67 677 0825
+                </a>
                 <a
                   href={`mailto:${DEFAULT_BRAND_TOKENS.email}`}
                   className="inline-flex items-center gap-1 hover:text-[#00F0FF]"

@@ -1,187 +1,266 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
-import { PROJECTS_DATA } from '../data/portfolioData';
+import { ArrowUpRight, Globe } from 'lucide-react';
+
+interface ProjectItem {
+  index: string;
+  title: string;
+  category: string;
+  year: string;
+  summary: string;
+  liveUrl: string;
+  domain: string;
+  tags: string[];
+  accent: string;
+  previewImage: string;
+}
+
+const projects: ProjectItem[] = [
+  {
+    index: '01',
+    title: 'DON BOSKO TIRANA',
+    category: 'DIGITAL ECOSYSTEM',
+    year: '2025',
+    summary: 'Official portal & multilingual digital hub for Don Bosko Center.',
+    liveUrl: 'https://www.qendradonbosko.com/',
+    domain: 'qendradonbosko.com',
+    tags: ['React', 'TypeScript', 'Tailwind CSS'],
+    accent: '#00F0FF',
+    previewImage:
+      'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1400&q=85',
+  },
+  {
+    index: '02',
+    title: 'LUKA RENT A CAR',
+    category: 'FLEET & BOOKING',
+    year: '2024',
+    summary: 'Real-time vehicle reservation engine & mobile-first booking flow.',
+    liveUrl: 'https://lukarentacar.com',
+    domain: 'lukarentacar.com',
+    tags: ['Full-Stack', 'Booking Engine', 'SEO'],
+    accent: '#00F0FF',
+    previewImage:
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85',
+  },
+  {
+    index: '03',
+    title: 'HANEUL PLATFORM',
+    category: 'B2B E-COMMERCE',
+    year: '2025',
+    summary: 'High-speed B2B Asian food distribution & product catalog.',
+    liveUrl: 'https://haneul.blackbear-solutions.com/',
+    domain: 'haneul.blackbear-solutions.com',
+    tags: ['Next.js', 'TypeScript', 'B2B Catalog'],
+    accent: '#38BDF8',
+    previewImage:
+      'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
+  },
+];
+
+const stackItems = [
+  'REACT 19',
+  'NEXT.JS',
+  'TYPESCRIPT',
+  'TAILWIND CSS',
+  'NODE.JS',
+  'PYTHON',
+  'AI / LLM WORKFLOWS',
+  'SQL & PRISMA',
+  'GSAP MOTION',
+  'FIGMA UI/UX',
+];
 
 export const ProjectsSection: React.FC = () => {
   return (
     <section
-      id="projects"
+      id="main"
       data-chapter="work"
-      data-sheet="true"
-      className="border-b border-[#1A212B] bg-[#060708]"
+      data-sheet=""
+      style={{ '--scene': '260svh' } as React.CSSProperties}
+      className="relative bg-[#060708]"
     >
-      <div
-        data-track="true"
-        style={{ '--scene': '160svh' } as React.CSSProperties}
-      >
+      <div data-track="">
         <div
-          data-sticky="true"
-          className="justify-between py-10 lg:py-8 bg-[#060708]"
+          data-sticky=""
+          className="relative h-screen flex flex-col justify-between pt-[72px] bg-[#060708] border-t border-white/[0.12] overflow-hidden"
         >
-          <div data-sticky-scrim="true" aria-hidden="true" />
-
-          {/* Top Bar inside Sticky Work Stage (Exact UnyoCorp #work header) */}
-          <div className="max-w-[100rem] mx-auto w-full px-4 sm:px-6 md:px-10 pb-5 border-b border-[#1A212B] flex flex-wrap items-end justify-between gap-4 shrink-0">
-            <div>
-              <div className="eyebrow mb-1.5 flex items-center gap-2.5">
-                <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
-                <span>03 / Selected Work</span>
-              </div>
-              <h2 className="font-display text-display-md text-[#F2F6F8]">
-                Featured Projects &amp; Platforms.
-              </h2>
+          {/* Top Bar of MAIN: Chapter Label + Scene Pills + Live Progress Bar */}
+          <div className="relative max-w-[1600px] w-full mx-auto px-5 sm:px-10 lg:px-14 py-3.5 border-b border-white/[0.08] flex items-center justify-between gap-4 shrink-0">
+            <div className="flex items-center gap-2.5 font-mono text-[10px] tracking-[0.22em] uppercase text-[#00F0FF]">
+              <span className="w-2 h-2 bg-[#00F0FF]" />
+              <span className="text-[#F4F5F7] font-semibold">02 / MAIN</span>
+              <span className="hidden sm:inline text-[#8E95A2]">— SELECTED WORKS</span>
             </div>
 
-            {/* Live Scene Counter & Index Pills */}
-            <div className="flex items-center gap-4">
-              <div className="font-mono text-xs text-[#8E9BAE]">
-                SCENE{' '}
-                <span data-scene-count="true" className="text-[#00F0FF] font-semibold">
-                  01
-                </span>{' '}
-                / 03
-              </div>
-              <div className="hidden sm:flex items-center gap-1.5">
-                {PROJECTS_DATA.map((p, i) => (
-                  <span
-                    key={p.id}
-                    data-scene-link="true"
-                    aria-current={i === 0 ? 'true' : undefined}
-                    className="px-2.5 py-1 border border-[#1A212B] aria-[current=true]:border-[#00F0FF] aria-[current=true]:bg-[#00F0FF] aria-[current=true]:text-[#060708] font-mono text-[11px] text-[#8E9BAE] transition-colors"
-                  >
-                    0{i + 1}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* UnyoCorp [data-scenes] Scroll-Scrubbed Full-Stage Wipe Container */}
-          <div
-            data-scenes="true"
-            className="max-w-[100rem] mx-auto w-full px-4 sm:px-6 md:px-10 my-4 flex-1"
-          >
-            {PROJECTS_DATA.map((project, idx) => (
-              <article
-                key={project.id}
-                data-scene="true"
-                data-current={idx === 0 ? 'true' : undefined}
-                className="border border-[#1A212B] bg-[#0C0F14] grid grid-cols-1 lg:grid-cols-12 overflow-hidden shadow-[0_-24px_60px_rgba(0,0,0,0.85)]"
-              >
-                {/* Left 7 Columns: [data-scene-media] Architecture Stage */}
-                <div className="lg:col-span-7 bg-[#0C0F14] p-6 sm:p-8 lg:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#1A212B] overflow-hidden">
-                  <div
-                    data-scene-media="true"
-                    className="h-full flex flex-col justify-between gap-6"
-                  >
-                    <div className="flex items-center justify-between pb-4 border-b border-[#1A212B]">
-                      <span className="eyebrow-accent">{project.status}</span>
-                      <span className="eyebrow">{project.index}</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-3 my-auto">
-                      {project.architectureNodes.map((node, nIdx) => (
-                        <div
-                          key={node.layer}
-                          className="p-4 border border-[#1A212B] bg-[#060708] hover:border-[#00F0FF] transition-colors"
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono text-[10px] uppercase tracking-widest text-[#00F0FF]">
-                              LAYER 0{nIdx + 1} // {node.layer}
-                            </span>
-                            <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
-                          </div>
-                          <div className="font-display text-lg text-[#F2F6F8] mt-1">
-                            {node.component}
-                          </div>
-                          <div className="text-xs text-[#8E9BAE] mt-0.5">{node.detail}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="pt-4 border-t border-[#1A212B] flex flex-wrap gap-1.5">
-                      {project.techStack.map((tech) => (
-                        <span key={tech} className="tag">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right 5 Columns: [data-scene-copy] Staggered Case Study Copy */}
+            {/* Scene Indicator Pills */}
+            <div className="hidden md:flex items-center gap-2">
+              {projects.map((p, idx) => (
                 <div
-                  data-scene-copy="true"
-                  className="lg:col-span-5 p-6 sm:p-8 lg:p-10 bg-[#060708] flex flex-col justify-between"
+                  key={p.index}
+                  data-scene-pill=""
+                  data-active={idx === 0 ? 'true' : undefined}
+                  className="px-3 py-1 font-mono text-[10px] tracking-[0.16em] uppercase border border-white/[0.08] text-[#8E95A2] data-[active=true]:border-[#00F0FF] data-[active=true]:text-[#060708] data-[active=true]:bg-[#00F0FF] transition-colors duration-200"
                 >
-                  <div className="flex items-center justify-between gap-2 pb-4 border-b border-[#1A212B]">
-                    <span className="eyebrow-accent">
-                      0{idx + 1} / 03 · {project.category}
-                    </span>
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-mono text-xs text-[#00F0FF] hover:underline inline-flex items-center gap-1"
-                      >
-                        <span>{project.liveDomain}</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                  </div>
-
-                  <div className="my-auto py-4">
-                    <div className="font-mono text-xs text-[#00F0FF] mb-2">{project.role}</div>
-                    <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-[#F2F6F8]">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-[#8E9BAE] mt-3 leading-relaxed">
-                      {project.overview}
-                    </p>
-
-                    <ul className="mt-5 space-y-2">
-                      {project.deliverables.map((item, dIdx) => (
-                        <li
-                          key={dIdx}
-                          className="flex items-start gap-2.5 text-xs sm:text-sm text-[#8E9BAE]"
-                        >
-                          <span className="mt-2 h-1.5 w-1.5 bg-[#00F0FF] shrink-0" />
-                          <span>
-                            {item.label && (
-                              <strong className="text-[#F2F6F8] font-medium">
-                                {item.label}:{' '}
-                              </strong>
-                            )}
-                            {item.description}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="pt-4 border-t border-[#1A212B] flex items-center justify-between">
-                    {project.liveUrl ? (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-primary !py-2.5 !px-4 !text-xs"
-                      >
-                        <span>Visit {project.liveDomain}</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 btn-icon" />
-                      </a>
-                    ) : (
-                      <a href="#contact" className="btn btn-ghost !py-2.5 !px-4 !text-xs">
-                        <span>Inquire</span>
-                      </a>
-                    )}
-                    <span className="font-mono text-xs text-[#525E6F]">0{idx + 1} / 03</span>
-                  </div>
+                  {p.index} {p.title.split(' ')[0]}
                 </div>
-              </article>
-            ))}
+              ))}
+            </div>
+
+            {/* Active Scene Counter */}
+            <div className="flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase">
+              <span data-scene-current="" className="text-[#00F0FF] font-bold">
+                01
+              </span>
+              <span className="text-white/25">/</span>
+              <span className="text-[#8E95A2]">03</span>
+            </div>
+
+            {/* Scroll-scrubbed progress bar across MAIN */}
+            <div
+              data-work-bar=""
+              className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#00F0FF] origin-left scale-x-0"
+            />
           </div>
+
+          {/* Center Full-Stage Scene Wipe Container ([data-scenes]) */}
+          <div className="relative flex-1 min-h-0 max-w-[1600px] w-full mx-auto px-5 sm:px-10 lg:px-14 py-4 sm:py-6 flex flex-col">
+            <div data-scenes="" className="relative flex-1 min-h-0">
+              {projects.map((project, idx) => (
+                <article
+                  key={project.index}
+                  data-scene={idx}
+                  className="bg-[#0B0D10] border border-white/[0.12] overflow-hidden flex flex-col justify-between p-5 sm:p-8 lg:p-12 shadow-[0_-24px_60px_rgba(0,0,0,0.85)]"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center h-full my-auto">
+                    {/* Left 5 Columns: Minimal Project Identity */}
+                    <div className="lg:col-span-5 flex flex-col justify-between space-y-4 sm:space-y-6">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <span className="font-display font-extrabold text-3xl sm:text-5xl text-[#00F0FF] leading-none">
+                            {project.index}
+                          </span>
+                          <span className="font-mono text-[10px] tracking-[0.2em] uppercase px-2.5 py-1 bg-[#13161B] text-[#F4F5F7] border border-white/[0.1]">
+                            {project.category} · {project.year}
+                          </span>
+                        </div>
+
+                        <h3 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-[#F4F5F7] tracking-[-0.035em] leading-[0.94] uppercase">
+                          <span className="block overflow-hidden pb-1">
+                            <span data-scene-line="" className="block">
+                              {project.title}
+                            </span>
+                          </span>
+                        </h3>
+
+                        <p
+                          data-scene-meta=""
+                          className="text-xs sm:text-sm text-[#8E95A2] leading-relaxed max-w-sm"
+                        >
+                          {project.summary}
+                        </p>
+                      </div>
+
+                      <div data-scene-meta="" className="space-y-4 pt-3 border-t border-white/[0.08]">
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.14em] bg-[#13161B] text-[#8E95A2] border border-white/[0.08]"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2.5 px-5 py-3 bg-[#F4F5F7] text-[#060708] font-mono text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#00F0FF] transition-colors"
+                          >
+                            <span>LIVE SITE</span>
+                            <ArrowUpRight className="w-4 h-4" />
+                          </a>
+                          <span className="hidden sm:inline-flex items-center gap-1.5 font-mono text-[11px] text-[#8E95A2]">
+                            <Globe className="w-3.5 h-3.5 text-[#00F0FF]" />
+                            {project.domain}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right 7 Columns: Counter-Parallax Visual Preview */}
+                    <div className="lg:col-span-7 h-full flex items-center">
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative block w-full aspect-[16/9] sm:aspect-[16/9.5] bg-[#060708] border border-white/[0.12] overflow-hidden"
+                      >
+                        {/* Browser Chrome Header */}
+                        <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-3.5 py-2 bg-[#060708]/90 backdrop-blur-md border-b border-white/[0.08]">
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-white/20" />
+                            <span className="w-2 h-2 rounded-full bg-white/20" />
+                            <span className="w-2 h-2 rounded-full bg-[#00F0FF]/80" />
+                          </div>
+                          <span className="font-mono text-[10px] tracking-[0.14em] text-[#8E95A2]">
+                            {project.domain}
+                          </span>
+                          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#00F0FF]">
+                            LIVE ↗
+                          </span>
+                        </div>
+
+                        {/* Counter-Parallax Media Inner */}
+                        <div data-split-media-inner="" className="w-full h-full">
+                          <img
+                            src={project.previewImage}
+                            alt={project.title}
+                            className="w-full h-full object-cover object-center brightness-[0.82] contrast-[1.08] group-hover:scale-105 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#060708] via-[#060708]/20 to-transparent" />
+                        </div>
+
+                        {/* Bottom Overlay Caption */}
+                        <div className="absolute bottom-3 left-4 right-4 z-20 flex items-end justify-between">
+                          <span className="font-display font-extrabold text-lg sm:text-2xl text-[#F4F5F7] tracking-tight uppercase">
+                            {project.title}
+                          </span>
+                          <span className="w-9 h-9 bg-[#F4F5F7] text-[#060708] flex items-center justify-center group-hover:bg-[#00F0FF] transition-colors">
+                            <ArrowUpRight className="w-4 h-4" />
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Scene Scrim for Under-Curtain Darkening */}
+                  <div
+                    data-scene-scrim=""
+                    aria-hidden="true"
+                    className="absolute inset-0 z-30 bg-[#040506] opacity-0 pointer-events-none"
+                  />
+                </article>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Velocity-Reactive Stack Ticker */}
+          <div className="w-full border-t border-white/[0.08] py-3 bg-[#090B0E] overflow-hidden shrink-0">
+            <div data-marquee-track="" className="flex w-max will-change-transform">
+              {[...stackItems, ...stackItems, ...stackItems].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-6 px-6">
+                  <span className="w-1.5 h-1.5 bg-[#00F0FF]" />
+                  <span className="font-display font-bold text-xs tracking-[0.18em] uppercase text-[#8E95A2] whitespace-nowrap">
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div data-sticky-scrim="" aria-hidden="true" />
         </div>
       </div>
     </section>

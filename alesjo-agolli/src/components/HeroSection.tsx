@@ -1,186 +1,187 @@
 import React from 'react';
-import { ArrowRight, Download } from 'lucide-react';
-import { PROFILE_DATA } from '../data/portfolioData';
+import { ArrowDownRight, ArrowUpRight, Phone } from 'lucide-react';
 
 interface HeroSectionProps {
-  onOpenCvModal: () => void;
+  onOpenCV: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
-  const marqueeItems = [...PROFILE_DATA.marqueeRecord, ...PROFILE_DATA.marqueeRecord];
+export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCV }) => {
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, selector: string) => {
+    e.preventDefault();
+    const el = document.querySelector<HTMLElement>(selector);
+    if (el) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(el, { duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <section
-      id="top"
+      id="home"
       data-chapter="arrival"
-      data-sheet="true"
-      className="border-b border-[#1A212B] bg-[#060708]"
+      data-sheet=""
+      style={{ '--scene': '85svh' } as React.CSSProperties}
+      className="relative bg-[#060708]"
     >
-      <div
-        data-track="true"
-        style={{ '--scene': '0svh' } as React.CSSProperties}
-      >
+      <div data-track="">
         <div
-          data-sticky="true"
-          className="bleed relative min-h-[100svh] flex flex-col justify-between overflow-hidden bg-[#060708]"
+          data-sticky=""
+          className="relative min-h-screen flex flex-col justify-between pt-[72px] bg-[#060708] bg-grid-pattern overflow-hidden"
         >
-          <div data-sticky-scrim="true" aria-hidden="true" />
-
-          {/* Desktop Right-Side 42% Full-Height Portrait Column */}
-          <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:bottom-12 lg:w-[42%] lg:border-l border-[#1A212B] overflow-hidden">
-            <figure
-              data-hero-portrait="true"
-              className="w-full h-full relative overflow-hidden bg-[#0C0F14] select-none"
+          {/* Top Architectural Meta Strip */}
+          <div className="w-full border-b border-white/[0.08] relative">
+            <div
+              data-rule=""
+              className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-3 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.2em] uppercase text-[#8E95A2]"
             >
-              <img
-                src="/alesjo-portrait.jpg"
-                alt="Alesjo Agolli"
-                className="w-full h-full object-cover object-[center_65%] contrast-[1.05] brightness-[0.96] transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.035]"
-              />
-
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    'linear-gradient(90deg, rgba(6,7,8,0.55) 0%, rgba(6,7,8,0) 30%), linear-gradient(180deg, rgba(6,7,8,0.15) 0%, rgba(6,7,8,0) 55%, rgba(6,7,8,0.88) 100%)',
-                }}
-              />
-
-              <figcaption className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-6 py-3.5 border-t border-[#1A212B] bg-[#060708]/85 backdrop-blur-md">
-                <span className="eyebrow text-[#F2F6F8] flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
-                  <span>Alesjo Agolli — Tirana, AL</span>
-                </span>
-                <span className="eyebrow-accent">01 / 03</span>
-              </figcaption>
-            </figure>
+              <div data-meta="" className="flex items-center gap-2.5">
+                <span className="w-2 h-2 bg-[#00F0FF]" />
+                <span className="text-[#F4F5F7] font-semibold">01 / HOME</span>
+              </div>
+              <div data-meta="" className="hidden sm:flex items-center gap-6">
+                <span>TIRANA, AL</span>
+                <span className="text-white/20">/</span>
+                <a href="tel:+355676770825" className="text-[#00F0FF] hover:underline">
+                  +355 67 677 0825
+                </a>
+              </div>
+              <div data-meta="" className="flex items-center gap-2 text-[#00F0FF]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
+                <span>AVAILABLE</span>
+              </div>
+            </div>
           </div>
 
-          {/* Main Left Editorial Column + Framed Mobile/Tablet Portrait */}
-          <div className="relative z-10 flex-1 flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-6 sm:pb-8">
-            <div className="max-w-[100rem] mx-auto w-full px-4 sm:px-6 md:px-10 my-auto">
-              <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
-                <span className="inline-block h-1.5 w-1.5 bg-[#00F0FF]" />
-                <span className="eyebrow text-[#F2F6F8]">
-                  Full-Stack Web Developer · AI Integration Specialist · UI/UX
-                </span>
-              </div>
+          {/* Center Grid */}
+          <div className="max-w-[1600px] w-full mx-auto px-5 sm:px-10 lg:px-14 py-6 lg:py-10 my-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative">
+              {/* Vertical Structural Rule */}
+              <div
+                data-vrule=""
+                className="hidden lg:block absolute left-[65%] top-0 bottom-0 w-px bg-white/[0.08] pointer-events-none"
+              />
 
-              {/* UnyoCorp [data-hero-line] Display Typography */}
-              <h1 className="font-display text-display-xl tracking-tight text-[#F2F6F8] max-w-[13ch] select-none">
-                <span className="claim-line-mask">
-                  <span data-hero-line="true" className="block">
-                    Platforms.
-                  </span>
-                </span>
-                <span className="claim-line-mask">
-                  <span data-hero-line="true" className="block">
-                    Products.
-                  </span>
-                </span>
-                <span className="claim-line-mask">
-                  <span data-hero-line="true" className="block text-[#00F0FF]">
-                    Local AI.
-                  </span>
-                </span>
-              </h1>
+              {/* Left 8 Columns: Giant Display Typography + Single Sentence */}
+              <div className="lg:col-span-8 space-y-6 lg:pr-8">
+                <div data-headline-wrap="" className="space-y-1">
+                  <h1 className="font-display font-extrabold text-[clamp(3rem,8.2vw,7.75rem)] leading-[0.88] tracking-[-0.045em] text-[#F4F5F7] uppercase">
+                    <span className="block overflow-hidden pb-1">
+                      <span data-line="" data-line-1="" className="block will-change-transform">
+                        ALESJO
+                      </span>
+                    </span>
+                    <span className="block overflow-hidden pb-1">
+                      <span data-line="" data-line-2="" className="block text-[#00F0FF] will-change-transform">
+                        AGOLLI<span className="text-[#F4F5F7]">.</span>
+                      </span>
+                    </span>
+                    <span className="block overflow-hidden pt-1">
+                      <span
+                        data-line=""
+                        data-line-3=""
+                        className="block text-[clamp(1.25rem,3vw,2.75rem)] leading-[1.02] tracking-[-0.03em] text-[#8E95A2] will-change-transform"
+                      >
+                        FULL-STACK WEB &amp; AI ENGINEER
+                      </span>
+                    </span>
+                  </h1>
+                </div>
 
-              {/* Concise Headline & Responsive CTAs */}
-              <div className="mt-5 sm:mt-6 max-w-xl space-y-5">
-                <p
-                  data-hero-sub="true"
-                  className="text-sm sm:text-base md:text-lg text-[#8E9BAE] leading-relaxed"
+                {/* Minimal 1-sentence bio + CTA row */}
+                <div
+                  data-meta=""
+                  className="pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-5"
                 >
-                  Crafting scalable web platforms, modern full-stack applications, and automated
-                  local LLM workflows from Tirana, Albania.
-                </p>
+                  <p className="text-sm sm:text-base text-[#8E95A2] max-w-md leading-relaxed">
+                    Building fast, high-craft web ecosystems &amp; intelligent digital products.
+                  </p>
 
-                <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
-                  <a
-                    href="#projects"
-                    data-hero-cta="true"
-                    className="btn btn-primary w-full sm:w-auto"
-                  >
-                    <span>View Projects</span>
-                    <ArrowRight className="w-4 h-4 btn-icon" />
-                  </a>
-                  <div className="grid grid-cols-2 sm:flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
-                    <button
-                      type="button"
-                      data-hero-cta="true"
-                      onClick={onOpenCvModal}
-                      className="btn btn-ghost w-full sm:w-auto"
-                    >
-                      <Download className="w-3.5 h-3.5 text-[#00F0FF]" />
-                      <span>CV</span>
-                    </button>
+                  <div className="flex flex-wrap items-center gap-3 shrink-0">
                     <a
-                      href="#contact"
-                      data-hero-cta="true"
-                      className="btn btn-ghost w-full sm:w-auto"
+                      href="#main"
+                      onClick={(e) => scrollTo(e, '#main')}
+                      className="group inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#F4F5F7] text-[#060708] font-mono text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#00F0FF] transition-colors duration-300"
                     >
-                      <span>Contact</span>
+                      <span>02 / MAIN</span>
+                      <ArrowDownRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                     </a>
+
+                    <button
+                      onClick={onOpenCV}
+                      className="inline-flex items-center gap-2 px-5 py-3.5 bg-[#0D0F12] text-[#F4F5F7] font-mono text-xs uppercase tracking-[0.16em] border border-white/[0.14] hover:border-[#00F0FF] hover:text-[#00F0FF] transition-colors cursor-pointer"
+                    >
+                      <span>CV</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-[#00F0FF]" />
+                    </button>
                   </div>
                 </div>
               </div>
 
-              {/* Mobile & Tablet Architectural Portrait Frame */}
-              <div className="lg:hidden mt-7">
-                <figure
-                  data-hero-portrait="true"
-                  className="relative w-full max-w-[24rem] sm:max-w-[27rem] mx-auto aspect-[4/4.3] border border-[#1A212B] bg-[#0C0F14] overflow-hidden"
-                >
-                  <img
-                    src="/alesjo-portrait.jpg"
-                    alt="Alesjo Agolli"
-                    className="w-full h-full object-cover object-[center_82%] contrast-[1.05] brightness-[0.97]"
-                  />
-
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        'linear-gradient(180deg, rgba(6,7,8,0.06) 0%, rgba(6,7,8,0) 55%, rgba(6,7,8,0.88) 100%)',
-                    }}
-                  />
-
-                  <figcaption className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-4 py-2.5 border-t border-[#1A212B] bg-[#060708]/88 backdrop-blur-md">
-                    <span className="eyebrow text-[#F2F6F8] flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
-                      <span>Alesjo Agolli — Tirana, AL</span>
-                    </span>
-                    <span className="eyebrow-accent">01 / 03</span>
-                  </figcaption>
-                </figure>
-              </div>
-            </div>
-          </div>
-
-          {/* UnyoCorp Velocity-Reactive Marquee Bar */}
-          <div className="relative z-10 border-t border-[#1A212B] bg-[#060708] h-12 flex items-center">
-            <div className="max-w-[100rem] mx-auto w-full px-4 sm:px-6 md:px-10 flex items-center gap-4 sm:gap-6 overflow-hidden">
-              <span className="eyebrow-accent shrink-0">On record</span>
-              <span className="h-3.5 w-px bg-[#1A212B] shrink-0" aria-hidden="true" />
-              <div className="marks-viewport relative flex-1">
+              {/* Right 4 Columns: Clean Portrait Frame */}
+              <div className="lg:col-span-4 max-w-[340px] sm:max-w-[380px] lg:max-w-none mx-auto w-full">
                 <div
-                  data-marks-track="true"
-                  className="marks-track flex items-center gap-8 sm:gap-10 whitespace-nowrap w-max"
+                  data-frame=""
+                  className="relative bg-[#0D0F12] border border-white/[0.12] p-2 group will-change-transform"
                 >
-                  {marqueeItems.map((item, idx) => (
-                    <React.Fragment key={idx}>
-                      <span className="font-display text-xs sm:text-sm md:text-base text-[#8E9BAE] hover:text-[#F2F6F8] transition-colors">
-                        {item}
+                  <div className="flex items-center justify-between px-2 py-1.5 border-b border-white/[0.08] mb-2 font-mono text-[10px] tracking-[0.16em] uppercase text-[#8E95A2]">
+                    <span>FIG. 01 — PORTRAIT</span>
+                    <span className="text-[#00F0FF]">TIRANA, AL</span>
+                  </div>
+
+                  <div className="relative aspect-[4/4.2] w-full overflow-hidden bg-[#13161B]">
+                    <img
+                      data-portrait=""
+                      src="/alesjo-portrait.jpg"
+                      alt="Alesjo Agolli"
+                      className="w-full h-full object-cover object-[center_82%] contrast-[1.05] brightness-[0.97] will-change-transform"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#060708]/75 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                      <div>
+                        <div className="font-mono text-[9px] tracking-[0.2em] uppercase text-[#00F0FF]">
+                          DIRECT LINE
+                        </div>
+                        <a
+                          href="tel:+355676770825"
+                          className="inline-flex items-center gap-1.5 font-display font-bold text-xs text-[#F4F5F7] hover:text-[#00F0FF] transition-colors"
+                        >
+                          <Phone className="w-3 h-3 text-[#00F0FF]" />
+                          +355 67 677 0825
+                        </a>
+                      </div>
+                      <span className="font-mono text-[9px] tracking-[0.18em] uppercase px-2 py-0.5 bg-[#060708]/85 border border-white/15 text-[#F4F5F7]">
+                        AA / 26
                       </span>
-                      <span className="text-[#00F0FF] font-mono text-xs">·</span>
-                    </React.Fragment>
-                  ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Bottom Scroll Progress Strip */}
+          <div className="w-full border-t border-white/[0.08] bg-[#060708]/90 relative">
+            <div
+              data-home-bar=""
+              className="absolute top-0 left-0 right-0 h-[2px] bg-[#00F0FF] origin-left scale-x-0"
+            />
+            <div className="max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 py-3.5 flex items-center justify-between text-[10px] font-mono tracking-[0.2em] uppercase text-[#8E95A2]">
+              <span>01 / 03 — HOME</span>
+              <a
+                href="#main"
+                onClick={(e) => scrollTo(e, '#main')}
+                className="flex items-center gap-2 text-[#00F0FF] hover:text-[#F4F5F7] transition-colors"
+              >
+                <span>SCROLL TO 02 / MAIN</span>
+                <ArrowDownRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+
+          <div data-sticky-scrim="" aria-hidden="true" />
         </div>
       </div>
     </section>
