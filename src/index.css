@@ -1,19 +1,13 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
 
-@theme {
-  --font-display: 'Syne', 'Space Grotesk', sans-serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --color-obsidian: #060708;
-  --color-surface: #0D0F12;
-  --color-elevated: #13161B;
-  --color-cyan-primary: #00F0FF;
-  --color-cyan-secondary: #00A8B5;
-  --color-crimson: #FF2A54;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --nav-h: 4.5rem;
   --canvas: #060708;
   --canvas-sunk: #0D0F12;
@@ -47,8 +41,6 @@
     background-color: #060708;
     color: #F4F5F7;
     text-rendering: optimizeLegibility;
-    selection-background-color: #00F0FF;
-    selection-color: #060708;
   }
 
   ::selection {
@@ -162,40 +154,45 @@ html[data-loaded='true'] [data-loader] {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
 }
 
-/* Keyframes */
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* CV Modal Helper Classes */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 28s linear infinite;
+.btn-primary {
+  background-color: #F4F5F7;
+  color: #060708;
 }
 
-/* Print styles for CV Modal */
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #printable-cv, #printable-cv * {
-    visibility: visible;
-  }
-  #printable-cv {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background: white !important;
-    color: black !important;
-    box-shadow: none !important;
-  }
-  .no-print {
-    display: none !important;
-  }
+.btn-primary:hover {
+  background-color: #00F0FF;
+  color: #060708;
+}
+
+.btn-ghost {
+  background-color: #0D0F12;
+  color: #F4F5F7;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.btn-ghost:hover {
+  border-color: #00F0FF;
+  color: #00F0FF;
+}
+
+.eyebrow-accent {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00F0FF;
 }
