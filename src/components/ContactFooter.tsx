@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Copy, Check, FileText } from 'lucide-react';
 import { DEFAULT_BRAND_TOKENS, PROFILE_DATA } from '../data/portfolioData';
-import { Reveal, MaskedLines } from './Reveal';
 
 interface ContactFooterProps {
   onOpenCvModal: () => void;
@@ -50,65 +49,60 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
   };
 
   return (
-    <>
-      {/* UnyoCorp #start Contact Section */}
-      <section
-        id="contact"
-        className="py-14 sm:py-18 md:py-24 border-b border-[#1A212B] bg-[#060708]"
-      >
+    <section
+      id="contact"
+      data-chapter="start"
+      data-sheet="true"
+      className="relative z-20 bg-[#060708]"
+    >
+      <div className="py-16 sm:py-20 md:py-28 border-t border-b border-[#1A212B] bg-[#060708]">
         <div className="max-w-[100rem] mx-auto px-4 sm:px-6 md:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left 5 Columns */}
-            <div className="lg:col-span-5">
-              <Reveal>
-                <div className="eyebrow mb-2 flex items-center gap-2.5">
-                  <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
-                  <span>06 / Contact</span>
-                </div>
-              </Reveal>
-              <h2 className="font-display text-display-md text-[#F2F6F8]">
-                <MaskedLines
-                  lines={[{ text: "Let's build" }, { text: 'together.', accent: true }]}
-                />
+            <div data-reveal="true" className="lg:col-span-5">
+              <div className="eyebrow mb-2 flex items-center gap-2.5">
+                <span className="h-1.5 w-1.5 bg-[#00F0FF]" />
+                <span>06 / Contact</span>
+              </div>
+              <h2 className="font-display text-display-lg text-[#F2F6F8]">
+                Let&apos;s build <span className="text-[#00F0FF]">together.</span>
               </h2>
-              <Reveal delayMs={140}>
-                <p className="mt-3 text-sm text-[#8E9BAE] max-w-md leading-relaxed">
-                  Available for full-stack web development, UI/UX engineering, and local AI
-                  integrations.
-                </p>
+              <p className="mt-3 text-sm text-[#8E9BAE] max-w-md leading-relaxed">
+                Available for full-stack web development, UI/UX engineering, and local AI
+                integrations.
+              </p>
 
-                <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                  <button
-                    type="button"
-                    onClick={handleCopyEmail}
-                    className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
-                  >
-                    {copiedEmail ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 text-[#00F0FF]" />
-                        <span>Copied Email</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3.5 h-3.5 text-[#00F0FF]" />
-                        <span>{DEFAULT_BRAND_TOKENS.email}</span>
-                      </>
-                    )}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={onOpenCvModal}
-                    className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
-                  >
-                    <FileText className="w-3.5 h-3.5 text-[#00F0FF]" />
-                    <span>Executive CV</span>
-                  </button>
-                </div>
-              </Reveal>
+              <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
+                >
+                  {copiedEmail ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-[#00F0FF]" />
+                      <span>Copied Email</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-[#00F0FF]" />
+                      <span>{DEFAULT_BRAND_TOKENS.email}</span>
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={onOpenCvModal}
+                  className="btn btn-ghost !py-2.5 !px-3.5 !text-xs"
+                >
+                  <FileText className="w-3.5 h-3.5 text-[#00F0FF]" />
+                  <span>Executive CV</span>
+                </button>
+              </div>
             </div>
 
             {/* Right 7 Columns: UnyoCorp Tag-Qualifier Form */}
-            <Reveal delayMs={160} className="lg:col-span-7">
+            <div data-reveal="true" className="lg:col-span-7">
               <form
                 onSubmit={handleSubmit}
                 className="bg-[#0C0F14] border border-[#1A212B] p-6 sm:p-8 space-y-5"
@@ -122,9 +116,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
                         type="button"
                         onClick={() => setSelectedFocus(opt)}
                         className={`tag ${
-                          active
-                            ? '!bg-[#00F0FF] !text-[#060708] !border-[#00F0FF]'
-                            : ''
+                          active ? '!bg-[#00F0FF] !text-[#060708] !border-[#00F0FF]' : ''
                         }`}
                       >
                         {opt}
@@ -162,19 +154,16 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
                 />
 
                 <div className="flex items-center justify-end pt-1">
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-full sm:w-auto"
-                  >
+                  <button type="submit" className="btn btn-primary w-full sm:w-auto">
                     <span>Send Brief</span>
                     <ArrowRight className="w-4 h-4 btn-icon" />
                   </button>
                 </div>
               </form>
-            </Reveal>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Ultra-Minimal Responsive Single-Bar Footer */}
       <footer className="bg-[#060708] py-4 sm:py-5">
@@ -213,6 +202,6 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCvModal }) =
           </div>
         </div>
       </footer>
-    </>
+    </section>
   );
 };

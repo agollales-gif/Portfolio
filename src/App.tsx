@@ -6,7 +6,7 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { SkillsMatrixSection } from './components/SkillsMatrixSection';
 import { CvPreviewModal } from './components/CvPreviewModal';
 import { ContactFooter } from './components/ContactFooter';
-import { PageLoader } from './components/Reveal';
+import { PageLoader, UnyoJourneyProvider } from './components/Reveal';
 
 export function App() {
   const [cvModalOpen, setCvModalOpen] = useState(false);
@@ -28,14 +28,16 @@ export function App() {
 
       <Navbar onOpenCvModal={() => setCvModalOpen(true)} />
 
-      <main>
-        <HeroSection onOpenCvModal={() => setCvModalOpen(true)} />
-        <AboutSection />
-        <ProjectsSection />
-        <SkillsMatrixSection />
-      </main>
-
-      <ContactFooter onOpenCvModal={() => setCvModalOpen(true)} />
+      {/* UnyoCorp Master ScrollTrigger Journey Engine */}
+      <UnyoJourneyProvider>
+        <main>
+          <HeroSection onOpenCvModal={() => setCvModalOpen(true)} />
+          <AboutSection />
+          <ProjectsSection />
+          <SkillsMatrixSection />
+          <ContactFooter onOpenCvModal={() => setCvModalOpen(true)} />
+        </main>
+      </UnyoJourneyProvider>
 
       <CvPreviewModal isOpen={cvModalOpen} onClose={() => setCvModalOpen(false)} />
     </div>

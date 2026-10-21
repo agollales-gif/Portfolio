@@ -50,21 +50,21 @@
 
 /* UnyoCorp Fluid Responsive Typography Scales */
 .text-display-xl {
-  font-size: clamp(2.75rem, 8.8vw, 8.6rem);
+  font-size: clamp(2.75rem, 8.6vw, 8.4rem);
   line-height: 0.89;
   letter-spacing: -0.04em;
   font-weight: 600;
 }
 
 .text-display-lg {
-  font-size: clamp(2rem, 4.8vw, 4.6rem);
+  font-size: clamp(1.95rem, 4.4vw, 4.25rem);
   line-height: 0.94;
   letter-spacing: -0.035em;
   font-weight: 600;
 }
 
 .text-display-md {
-  font-size: clamp(1.55rem, 3vw, 2.85rem);
+  font-size: clamp(1.5rem, 2.8vw, 2.65rem);
   line-height: 1;
   letter-spacing: -0.03em;
   font-weight: 600;
@@ -78,7 +78,7 @@
 
 .eyebrow {
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(0.65rem, 1.4vw, 0.73rem);
+  font-size: clamp(0.65rem, 1.4vw, 0.72rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.14em;
@@ -88,7 +88,7 @@
 
 .eyebrow-accent {
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(0.65rem, 1.4vw, 0.73rem);
+  font-size: clamp(0.65rem, 1.4vw, 0.72rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.14em;
@@ -109,16 +109,16 @@
     color 240ms var(--ease-out-expo);
 }
 
-/* UnyoCorp Authentic Buttons (Crisp editorial state flip, zero gimmicks) */
+/* UnyoCorp Authentic Buttons */
 .btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.85rem;
-  padding: 1rem 1.35rem 1rem 1.45rem;
+  padding: 0.95rem 1.35rem 0.95rem 1.45rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.1em;
@@ -178,9 +178,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.45rem 0.7rem;
+  padding: 0.42rem 0.68rem;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.69rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -200,19 +200,69 @@
   color: #060708;
 }
 
-.tag-accent {
-  color: var(--accent);
-  background-color: rgba(0, 240, 255, 0.06);
-  border-color: rgba(0, 240, 255, 0.28);
+/* ============================================================================
+   UNYOCORP EXACT SCROLL SHEET & SCENE CHOREOGRAPHY ARCHITECTURE
+   ============================================================================ */
+[data-chapter],
+[data-journey] {
+  position: relative;
 }
 
-.tag-accent:hover {
-  background-color: var(--accent);
-  border-color: var(--accent);
-  color: #060708;
+[data-chapter] {
+  isolation: isolate;
 }
 
-/* UnyoCorp Line-by-Line Mask Reveal (.claim-line-mask) */
+[data-sticky],
+[data-track] {
+  position: relative;
+}
+
+[data-sticky] {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-top: var(--sheet-pad, calc(var(--nav-h) + 1.75rem));
+  background-color: var(--canvas);
+  color: var(--text-strong);
+}
+
+[data-sticky].bleed {
+  --sheet-pad: 0px;
+}
+
+[data-sticky-scrim] {
+  display: none;
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  [data-sheet]:not(:last-child) {
+    margin-bottom: -100svh;
+  }
+
+  [data-track] {
+    height: calc(var(--scene, 0svh) + 200svh);
+  }
+
+  [data-sticky] {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: clip;
+    isolation: isolate;
+    transform-origin: 50% 0%;
+  }
+
+  [data-sticky-scrim] {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    background-color: #060708;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 .claim-line-mask {
   overflow: hidden;
   padding-bottom: 0.12em;
@@ -220,12 +270,35 @@
   display: block;
 }
 
-.claim-line-inner {
+/* UnyoCorp Scrollytelling Work Scenes ([data-scenes-live]) */
+[data-scenes] {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+[data-scenes-live='true'] [data-scenes] {
   display: block;
-  will-change: transform, opacity;
-  transition:
-    transform 880ms var(--ease-out-expo),
-    opacity 880ms var(--ease-out-expo);
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+[data-scenes-live='true'] [data-scene] {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+/* UnyoCorp Method Swap ([data-swap]) */
+[data-swap] {
+  display: grid;
+}
+
+[data-swap-word] {
+  grid-area: 1 / 1;
+  white-space: nowrap;
 }
 
 /* UnyoCorp Edge-Masked Marquee (.marks-viewport) */
@@ -241,41 +314,6 @@
 
 .marks-track:hover {
   animation-play-state: paused;
-}
-
-/* UnyoCorp Sticky Stacking Cards ([data-stack]) */
-.unyo-stack {
-  --stack-top: 4.75rem;
-  --stack-step: 1.15rem;
-}
-
-.unyo-stack-card {
-  position: sticky;
-  top: calc(var(--stack-top) + var(--card-index, 0) * var(--stack-step));
-  transform-origin: 50% 0;
-  will-change: transform;
-  transition:
-    transform 350ms var(--ease-out-expo),
-    border-color 280ms var(--ease-out-expo);
-}
-
-@media (max-width: 1023.98px) {
-  .unyo-stack-card {
-    position: relative;
-    top: auto;
-  }
-}
-
-/* UnyoCorp Image Frame Zoom */
-.unyo-media-frame img {
-  transform: scale(1.01);
-  transition:
-    transform 900ms var(--ease-out-expo),
-    filter 750ms var(--ease-out-expo);
-}
-
-.unyo-media-frame:hover img {
-  transform: scale(1.045);
 }
 
 /* Custom Scrollbar */
