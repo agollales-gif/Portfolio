@@ -30,13 +30,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
         }}
       />
 
-      {/* Right-Side Portrait Column (Responsive on Mobile, Tablet & Desktop) */}
-      <div className="relative lg:absolute lg:top-0 lg:right-0 lg:bottom-12 lg:w-[42%] h-[46svh] sm:h-[54svh] md:h-[60svh] lg:h-auto order-2 lg:order-none border-t lg:border-t-0 lg:border-l border-[#1A222C] overflow-hidden group">
+      {/* Desktop Right-Side Full-Height Column (lg and up) */}
+      <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:bottom-12 lg:w-[42%] lg:border-l border-[#1A222C] overflow-hidden group">
         <figure className="w-full h-full relative overflow-hidden bg-[#050709] select-none">
           <img
             src="/alesjo-portrait.jpg"
             alt="Alesjo Agolli"
-            className="w-full h-full object-cover object-[center_18%] contrast-[1.05] brightness-[0.95] animate-portrait-zoom group-hover:scale-[1.03] transition-transform duration-1000 ease-out"
+            className="w-full h-full object-cover object-[center_65%] contrast-[1.05] brightness-[0.96] animate-portrait-zoom group-hover:scale-[1.03] transition-transform duration-1000 ease-out"
           />
 
           {/* Subtle Animated Electric Cyan Telemetry Scanline */}
@@ -51,11 +51,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'linear-gradient(90deg, rgba(6,7,8,0.68) 0%, rgba(6,7,8,0) 35%), linear-gradient(180deg, rgba(6,7,8,0.18) 0%, rgba(6,7,8,0) 45%, rgba(6,7,8,0.88) 100%)',
+                'linear-gradient(90deg, rgba(6,7,8,0.68) 0%, rgba(6,7,8,0) 35%), linear-gradient(180deg, rgba(6,7,8,0.18) 0%, rgba(6,7,8,0) 55%, rgba(6,7,8,0.88) 100%)',
             }}
           />
 
-          <figcaption className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-4 sm:px-6 py-3 border-t border-[#1A222C]/80 bg-[#060708]/80 backdrop-blur-md">
+          <figcaption className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-6 py-3.5 border-t border-[#1A222C]/80 bg-[#060708]/80 backdrop-blur-md">
             <span className="eyebrow text-[#F2F6F8] flex items-center gap-2">
               <span className="h-1.5 w-1.5 bg-[#00F0FF] animate-ping" />
               <span>Alesjo Agolli — Tirana, AL</span>
@@ -65,8 +65,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
         </figure>
       </div>
 
-      {/* Main Left Editorial Column */}
-      <div className="relative z-10 flex-1 flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-6 sm:pb-8 order-1 lg:order-none">
+      {/* Main Left Editorial Column + Framed Mobile/Tablet Portrait */}
+      <div className="relative z-10 flex-1 flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-6 sm:pb-8">
         <div className="max-w-[100rem] mx-auto w-full px-4 sm:px-6 md:px-10 my-auto">
           <Reveal delayMs={40}>
             <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
@@ -91,7 +91,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
           </h1>
 
           {/* Concise Headline & Responsive CTAs */}
-          <Reveal delayMs={380} className="mt-5 sm:mt-6 max-w-xl space-y-5">
+          <Reveal delayMs={280} className="mt-5 sm:mt-6 max-w-xl space-y-5">
             <p className="text-sm sm:text-base md:text-lg text-[#94A3B4] leading-relaxed border-l-2 border-[#00F0FF] pl-3.5 sm:pl-4">
               Crafting scalable web platforms, modern full-stack applications, and automated local
               LLM workflows from Tirana, Albania.
@@ -117,11 +117,59 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCvModal }) => {
               </div>
             </div>
           </Reveal>
+
+          {/* Mobile & Tablet Architectural Portrait Frame (Shows Full Head, Neck & Jacket cleanly!) */}
+          <Reveal delayMs={360} className="lg:hidden mt-7">
+            <figure className="relative w-full max-w-[24rem] sm:max-w-[27rem] mx-auto aspect-[4/4.3] border border-[#1A222C] bg-[#0A0C0F] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
+              {/* Electric Cyan Architectural Corner Accents */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 left-0 w-3.5 h-3.5 border-t-2 border-l-2 border-[#00F0FF] z-20"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 right-0 w-3.5 h-3.5 border-t-2 border-r-2 border-[#00F0FF] z-20"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-0 left-0 w-3.5 h-3.5 border-b-2 border-l-2 border-[#00F0FF] z-20"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-0 right-0 w-3.5 h-3.5 border-b-2 border-r-2 border-[#00F0FF] z-20"
+              />
+
+              {/* Portrait Positioned at [center_82%] so Head + Shoulders + Jacket are Perfectly Framed */}
+              <img
+                src="/alesjo-portrait.jpg"
+                alt="Alesjo Agolli"
+                className="w-full h-full object-cover object-[center_82%] contrast-[1.05] brightness-[0.97]"
+              />
+
+              {/* Subtle Bottom Gradient for Caption Readability */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(180deg, rgba(6,7,8,0.08) 0%, rgba(6,7,8,0) 55%, rgba(6,7,8,0.88) 100%)',
+                }}
+              />
+
+              <figcaption className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between px-4 py-2.5 border-t border-[#1A222C]/80 bg-[#060708]/85 backdrop-blur-md">
+                <span className="eyebrow text-[#F2F6F8] flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 bg-[#00F0FF] animate-ping" />
+                  <span>Alesjo Agolli — Tirana, AL</span>
+                </span>
+                <span className="eyebrow-accent">01 / 03</span>
+              </figcaption>
+            </figure>
+          </Reveal>
         </div>
       </div>
 
       {/* Compact Responsive Marquee Bar */}
-      <div className="relative z-10 border-t border-[#1A222C] bg-[#060708]/95 h-11 sm:h-12 flex items-center order-3 lg:order-none">
+      <div className="relative z-10 border-t border-[#1A222C] bg-[#060708]/95 h-11 sm:h-12 flex items-center">
         <div className="max-w-[100rem] mx-auto w-full px-4 sm:px-6 md:px-10 flex items-center gap-4 sm:gap-6 overflow-hidden">
           <span className="eyebrow-accent shrink-0">On record</span>
           <span className="h-3.5 w-px bg-[#1A222C] shrink-0" aria-hidden="true" />
