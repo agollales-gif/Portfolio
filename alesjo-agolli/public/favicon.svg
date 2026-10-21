@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Obsidian Black Squircle/Architectural Base -->
+  <rect width="64" height="64" rx="14" fill="#060708" />
+  <rect x="2" y="2" width="60" height="60" rx="12" stroke="#1A222C" stroke-width="2" />
+  
+  <!-- Electric Cyan Top-Right Corner Accent -->
+  <path d="M44 2H52C57.5228 2 62 6.47715 62 12V20" stroke="#00F0FF" stroke-width="2.5" />
+  <path d="M20 62H12C6.47715 62 2 57.5228 2 52V44" stroke="#00F0FF" stroke-width="2.5" />
+
+  <!-- Monogram First "A" (Crisp White) -->
+  <path
+    d="M12 46L22.5 18H28.5L39 46H33.2L31 39.5H20L17.8 46H12ZM21.6 34.5H29.4L25.5 23L21.6 34.5Z"
+    fill="#F2F6F8"
+  />
+
+  <!-- Monogram Second "A" (Electric Cyan #00F0FF, overlapping architectural offset) -->
+  <path
+    d="M27 46L37.5 18H43.5L54 46H48.2L46 39.5H35L32.8 46H27ZM36.6 34.5H44.4L40.5 23L36.6 34.5Z"
+    fill="#00F0FF"
+  />
+</svg>
