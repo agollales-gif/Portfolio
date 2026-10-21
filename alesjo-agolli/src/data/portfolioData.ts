@@ -119,7 +119,6 @@ export const PROFILE_DATA = {
     'CultiVETing (Liguria, Italy)',
     'Bosko AI — Local LLM via Ollama',
     'Sekretaria Management System',
-    'Bosko Counter-Labs & T.I.K. Pro League',
   ],
 };
 
@@ -337,18 +336,6 @@ export const INTERNATIONAL_EXPERIENCE: ExperienceItem[] = [
     tag: 'EUROPEAN HACKATHON ECOSYSTEM',
     highlights: [
       "Competed in Europe's leading hackathon ecosystem, collaborating under tight deadlines to build and pitch innovative software prototypes.",
-    ],
-  },
-  {
-    id: 'tech-community-2026',
-    year: '2026',
-    title: 'Tech Community & Event Organizer',
-    location: 'Tirana, Albania',
-    flag: '🇦🇱',
-    tag: 'TECHNICAL LEADERSHIP',
-    highlights: [
-      'Organized the "Bosko Counter-Labs" tournament, managing technical execution and event operations.',
-      'Architected the "T.I.K. Pro League" academic and technical competition framework for ICT students.',
     ],
   },
 ];
