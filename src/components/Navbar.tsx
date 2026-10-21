@@ -63,11 +63,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCvModal }) => {
             aria-label="Alesjo Agolli — home"
             className="island pointer-events-auto h-11 px-4 inline-flex items-center gap-3 text-[#F2F6F8] hover:border-[#00F0FF]/60 transition-colors"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 3h8v8H3z" fill="currentColor" />
-              <path d="M13 3h8v8h-8z" fill="#00F0FF" />
-              <path d="M3 13h8v8H3z" fill="currentColor" opacity="0.28" />
-              <path d="M13 13h8v8h-8z" fill="currentColor" />
+            <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <rect width="64" height="64" fill="#060708" />
+              <rect x="2" y="2" width="60" height="60" stroke="#00F0FF" strokeWidth="3" strokeOpacity="0.45" />
+              <path
+                d="M11 47L22 17H28.5L39.5 47H33.5L31.2 40H19.8L17.5 47H11ZM21.4 34.8H29.6L25.5 22.5L21.4 34.8Z"
+                fill="#F2F6F8"
+              />
+              <path
+                d="M26.5 47L37.5 17H44L55 47H49L46.7 40H35.3L33 47H26.5ZM36.9 34.8H45.1L41 22.5L36.9 34.8Z"
+                fill="#00F0FF"
+              />
             </svg>
             <span className="font-display font-semibold tracking-tight text-sm md:text-base">
               Alesjo Agolli
