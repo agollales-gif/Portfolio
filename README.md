@@ -32,6 +32,6 @@ npm run build
 ---
 
 ## 📫 Contact
-- **Email:** [agollales@gmail.com](mailto:agollales@gmail.com)
+- **Email:** [alesjoagolli@aleis.tech](mailto:alesjoagolli@aleis.tech)
 - **GitHub:** [github.com/agollales-gif](https://github.com/agollales-gif)
 - **LinkedIn:** [linkedin.com/in/alesjo-agolli-a82223361](https://www.linkedin.com/in/alesjo-agolli-a82223361/)

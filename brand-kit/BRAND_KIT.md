@@ -74,5 +74,5 @@ Alesjo Agolli
 Full-Stack Web Developer & AI Integration Specialist
 📍 Tirana, Albania
 💻 GitHub: github.com/agollales-gif | 🔗 LinkedIn: linkedin.com/in/alesjo-agolli-a82223361
-✉️ agollales@gmail.com
+✉️ alesjoagolli@aleis.tech
 ```

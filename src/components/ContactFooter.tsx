@@ -122,7 +122,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCV }) => {
           {/* 3. Email */}
           <a
             data-close-card=""
-            href="mailto:agollales@gmail.com"
+            href="mailto:alesjoagolli@aleis.tech"
             className="group bg-[#0A0C0F] hover:bg-[#10141A] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-colors"
           >
             <div className="flex items-center justify-between">
@@ -133,7 +133,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenCV }) => {
             </div>
             <div>
               <div className="font-display font-extrabold text-lg sm:text-xl text-[#F4F5F7] group-hover:text-[#00F0FF] transition-colors break-all">
-                agollales@gmail.com
+                alesjoagolli@aleis.tech
               </div>
               <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#8E95A2] mt-1">
                 SEND INQUIRY ↗

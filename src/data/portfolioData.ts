@@ -349,7 +349,7 @@ export interface BrandKitCustomTokens {
 
 export const DEFAULT_BRAND_TOKENS: BrandKitCustomTokens = {
   portfolioUrl: 'alesjoagolli.dev',
-  email: 'agollales@gmail.com',
+  email: 'alesjoagolli@aleis.tech',
   githubUser: 'agollales-gif',
   linkedinUser: 'alesjo-agolli-a82223361',
   phone: '',
@@ -357,7 +357,7 @@ export const DEFAULT_BRAND_TOKENS: BrandKitCustomTokens = {
 
 export function generateBrandKitAssets(tokens: BrandKitCustomTokens) {
   const portfolioDisplay = tokens.portfolioUrl.trim() || 'alesjoagolli.dev';
-  const emailDisplay = tokens.email.trim() || 'agollales@gmail.com';
+  const emailDisplay = tokens.email.trim() || 'alesjoagolli@aleis.tech';
   const githubDisplay = tokens.githubUser.trim() || 'agollales-gif';
   const linkedinDisplay = tokens.linkedinUser.trim() || 'alesjo-agolli-a82223361';
   const phoneDisplay = tokens.phone.trim() || '[Your Phone Number]';
