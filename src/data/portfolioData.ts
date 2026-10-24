@@ -51,21 +51,20 @@ export const PROFILE_DATA = {
   nodeId: 'TIA-AL-NODE-01',
   roles: [
     'Full-Stack Web Developer',
-    'AI Integration Specialist',
-    'UI/UX Engineer',
+    'UI/UX & Frontend Engineer',
   ],
   hero: {
     headline:
-      'Alesjo Agolli — Full-Stack Web Developer & AI Integration Specialist crafting scalable web platforms, modern digital products, and local AI integrations.',
+      'Alesjo Agolli — Full-Stack Web Developer crafting scalable web platforms, responsive interfaces, and modern digital products.',
     subHeadline:
-      'Bridging modern front-end architecture with fast back-end APIs and automated local LLM workflows.',
+      'Bridging modern front-end architecture with fast back-end APIs and clean user experiences.',
     primaryCtaProjects: 'View My Projects',
     primaryCtaCv: 'Download CV',
     secondaryCtaContact: 'Contact Me',
   },
   about: {
     intro:
-      'I am a Tirana-based Full-Stack Web Developer and AI Integration Specialist passionate about building fast, user-centric web platforms and intelligent digital products. With a strong foundation in Information & Communication Technology (ICT) from Don Bosko Technical High School in Tirana, I specialize in engineering production-ready applications, institutional digital platforms, and automated workflows.',
+      'I am a Tirana-based Full-Stack Web Developer passionate about building fast, user-centric web platforms and digital products. With a strong foundation in Information & Communication Technology (ICT) from Don Bosko Technical High School in Tirana, I focus on engineering production-ready applications, institutional digital platforms, and clean web workflows.',
     toolkitIntro: 'My technical toolkit spans the entire development lifecycle:',
     lifecyclePillars: [
       {
@@ -83,11 +82,11 @@ export const PROFILE_DATA = {
         tags: ['Node.js', 'Express', 'Hono', 'Python', 'Supabase', 'PostgreSQL'],
       },
       {
-        code: 'STAGE_03 // LOCAL AI & AUTOMATION',
-        title: 'Conversational AI & LLM Workflows',
+        code: 'STAGE_03 // AUTOMATION & DEPLOYMENT',
+        title: 'Modern Tooling & Workflows',
         description:
-          'Deploying and customizing conversational AI systems powered by local Large Language Models (LLMs) via Ollama.',
-        tags: ['Ollama', 'Local LLMs', 'AI Assistants', 'Workflow Automation'],
+          'Automating build, deployment, and API integrations for reliable, scalable production systems.',
+        tags: ['Git', 'Vercel', 'REST APIs', 'Workflow Automation'],
       },
     ],
     closing:
@@ -380,34 +379,33 @@ As a Full-Stack Web Developer based in Tirana, I work across the entire developm
 • Local AI: Ollama, Local LLMs, Conversational AI Assistants
 
 I am always open to connecting with fellow engineers, tech founders, and teams working on ambitious digital products. Feel free to reach out!`,
-    githubShortBio: `Full-Stack Web Developer & AI Integration Specialist | Building with TypeScript, React, Next.js, Node.js & Python | Local AI (Ollama)`,
+    githubShortBio: `Full-Stack Web Developer | Building with TypeScript, React, Next.js, Node.js & Python`,
     githubReadme: `### Hi there, I'm Alesjo Agolli 👋
 
-**Full-Stack Web Developer & AI Integration Specialist** based in Tirana, Albania 🇦🇱.  
-I specialize in engineering modern web applications, institutional management platforms, and local AI integrations.
+**Full-Stack Web Developer** based in Tirana, Albania 🇦🇱.  
+I focus on engineering modern web applications, responsive interfaces, and digital platforms.
 
-- 🔭 **Current Focus:** Full-stack web architecture (\`React\`, \`Next.js\`, \`TypeScript\`, \`Node.js\`, \`Supabase\`) and local AI integrations (\`Ollama\`).
-- 🏗️ **Notable Deployments:** Digital Ecosystem for [Don Bosko Tirana](https://www.qendradonbosko.com/) (*Web Portal, Sekretaria Admin Platform & Bosko AI*), [Luka Rent a Car](https://lukarentacar.com), and [HaNeul Distributor Web App](https://haneul.blackbear-solutions.com/).
+- 🔭 **Current Focus:** Full-stack web architecture (\`React\`, \`Next.js\`, \`TypeScript\`, \`Node.js\`, \`Supabase\`).
+- 🏗️ **Notable Deployments:** Digital Ecosystem for [Don Bosko Tirana](https://www.qendradonbosko.com/) (*Web Portal & Sekretaria Admin Platform*), [Luka Rent a Car](https://lukarentacar.com), and [HaNeul Distributor Web App](https://haneul.blackbear-solutions.com/).
 - 🌍 **International Experience:** HackJunction 2025 (Tirana & Finland 🇫🇮) | CultiVETing 2026 (Liguria, Italy 🇮🇹).
 - 📫 **How to reach me:** ${emailDisplay} | https://www.linkedin.com/in/${linkedinDisplay}/
 
 #### 🛠️ Tech Stack & Tools
 - **Frontend & UI/UX:** React, Next.js, TypeScript, Vite, Tailwind CSS, Figma
-- **Backend & Databases:** Node.js, Express, Hono, Python, C++, Supabase, PostgreSQL, REST APIs
-- **AI & Automation:** Ollama, Local LLM Architecture, Custom AI Assistants`,
+- **Backend & Databases:** Node.js, Express, Hono, Python, Supabase, PostgreSQL, REST APIs`,
     socialBioOption1: `Alesjo Agolli
-💻 Full-Stack Web Developer & AI Specialist
-⚡ React • TypeScript • Next.js • Node.js • Local AI
+💻 Full-Stack Web Developer
+⚡ React • TypeScript • Next.js • Node.js • Supabase
 🌍 HackJunction 🇫🇮 | CultiVETing 🇮🇹
 📍 Tirana, AL | 👇 Portfolio & Projects
 ${portfolioDisplay}`,
-    socialBioOption2: `Full-Stack Web Developer & AI Integration Specialist.
-Building scalable web apps, modern interfaces, and local AI systems.
+    socialBioOption2: `Full-Stack Web Developer.
+Building scalable web apps, modern interfaces, and digital systems.
 📍 Tirana, Albania | 🌐 ${portfolioDisplay}`,
     emailSignature: `Best regards,
 
 Alesjo Agolli
-Full-Stack Web Developer & AI Integration Specialist
+Full-Stack Web Developer
 📍 Tirana, Albania
 🌐 Portfolio: ${portfolioDisplay}
 💻 GitHub: github.com/${githubDisplay} | 🔗 LinkedIn: linkedin.com/in/${linkedinDisplay}

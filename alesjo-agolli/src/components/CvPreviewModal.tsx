@@ -37,7 +37,7 @@ export const CvPreviewModal: React.FC<CvPreviewModalProps> = ({ isOpen, onClose 
   const handleDownloadMarkdownCv = () => {
     const cvMarkdown = `# ALESJO AGOLLI
 Location: Tirana, Albania
-Core Roles: Full-Stack Web Developer | AI Integration Specialist | UI/UX Engineer
+Core Roles: Full-Stack Web Developer | UI/UX & Frontend Engineer
 Phone: +355 67 677 0825
 Email: ${DEFAULT_BRAND_TOKENS.email}
 GitHub: https://github.com/${DEFAULT_BRAND_TOKENS.githubUser}

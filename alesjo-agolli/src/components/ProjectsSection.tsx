@@ -31,10 +31,9 @@ const projects: ProjectItem[] = [
     summary: 'Official portal & multilingual digital hub for Don Bosko Center.',
     liveUrl: 'https://www.qendradonbosko.com/',
     domain: 'qendradonbosko.com',
-    tags: ['React', 'TypeScript', 'Tailwind CSS', 'AI'],
+    tags: ['React', 'TypeScript', 'Tailwind CSS'],
     accent: '#00F0FF',
-    previewImage:
-      'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1400&q=85',
+    previewImage: '/preview-donbosko.png',
   },
   {
     index: '02',
@@ -46,8 +45,7 @@ const projects: ProjectItem[] = [
     domain: 'lukarentacar.com',
     tags: ['Full-Stack', 'Booking Engine', 'SEO'],
     accent: '#00F0FF',
-    previewImage:
-      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=85',
+    previewImage: '/preview-lukarent.png',
   },
   {
     index: '03',
@@ -59,8 +57,7 @@ const projects: ProjectItem[] = [
     domain: 'haneul.blackbear-solutions.com',
     tags: ['Next.js', 'TypeScript', 'B2B Catalog'],
     accent: '#38BDF8',
-    previewImage:
-      'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
+    previewImage: '/preview-haneul.png',
   },
 ];
 
@@ -71,7 +68,7 @@ const stackItems = [
   'TAILWIND CSS',
   'NODE.JS',
   'PYTHON',
-  'AI / LLM WORKFLOWS',
+  'REST APIS & BACKEND',
   'SQL & PRISMA',
   'GSAP MOTION',
   'FIGMA UI/UX',
@@ -473,9 +470,9 @@ export const ProjectsSection: React.FC = () => {
                       <img
                         src={project.previewImage}
                         alt={project.title}
-                        className="w-full h-full object-cover object-center brightness-[0.86] contrast-[1.08] group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover object-top brightness-[0.98] contrast-[1.02] group-hover:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#060708] via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#060708]/80 via-transparent to-transparent pointer-events-none" />
 
                       <div className="absolute bottom-3 left-4 right-4 z-20 flex items-end justify-between">
                         <span className="font-display font-extrabold text-lg sm:text-xl text-[#F4F5F7] tracking-tight uppercase">

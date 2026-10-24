@@ -104,7 +104,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCV }) => {
                     data-line-3=""
                     className="block text-[clamp(1.2rem,2.8vw,2.6rem)] leading-[1.04] tracking-[-0.03em] text-[#8E95A2] will-change-transform"
                   >
-                    FULL-STACK WEB &amp; AI ENGINEER
+                    FULL-STACK WEB DEVELOPER
                   </span>
                 </span>
               </h1>
@@ -116,7 +116,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCV }) => {
               className="pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-5"
             >
               <p className="text-sm sm:text-base text-[#8E95A2] max-w-md leading-relaxed">
-                High-craft web platforms, AI workflows &amp; modern digital systems.
+                Building modern web platforms, responsive interfaces &amp; scalable digital systems.
               </p>
 
               <div className="flex flex-wrap items-center gap-3 shrink-0">
